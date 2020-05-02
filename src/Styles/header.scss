@@ -1,0 +1,156 @@
+@import "variables";
+
+.header-cont {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 2;
+  height: 80px;
+  padding: 0 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--background-color);
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+}
+
+.header-section {
+  display: flex;
+  align-items: center;
+}
+
+.show-desktop {
+  @media screen and (max-width: 480px) {
+    display: none;
+  }
+}
+
+.show-mobile {
+  @media screen and (min-width: 480px) {
+    display: none;
+  }
+}
+
+.header-hamburger-mobile {
+  position: relative;
+  width: 35px;
+  height: 25px;
+  fill: grey;
+}
+
+.header-hamburger-mobile-material {
+  display: none;
+  @media screen and (max-width: 480px) {
+    z-index: 5;
+    margin-right: -7.5px;
+    width: 50px;
+    height: 50px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+
+    &.toggle {
+      transition: all linear 0.2s, background-color linear 0.2s 0.2s;
+      background-color: rgba(0, 0, 0, 0.08);
+    }
+  }
+}
+
+.header-right-section-link {
+  font-size: $title-font-size;
+  margin: 0 10px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+  width: 55px;
+  text-align: center;
+  transition: all linear 0.2s;
+
+  &.logout {
+    color: var(--error-color);
+  }
+}
+
+.header-right-section-link-active {
+  .header-right-section-link {
+    background-color: var(--login-page-background-color);
+  }
+}
+
+.header-logo {
+  width: 50px;
+  height: 50px;
+  display: block;
+}
+
+.header-name {
+  font-size: $huge-font-size;
+  margin-left: 20px;
+
+  @media screen and (max-width: 480px) {
+    margin-left: 0;
+    font-size: $big-font-size;
+  }
+}
+
+.header-sidebar-back {
+  display: none;
+  @media screen and (max-width: 480px) {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 100vh;
+    z-index: 2;
+  }
+}
+
+.header-sidebar-container {
+  display: none;
+  @media screen and (max-width: 480px) {
+    display: block;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 80%;
+    background-color: white;
+    z-index: 4;
+  }
+}
+
+.header-sidebar-link {
+  transition: all linear 0.2s;
+
+  &.active {
+    background-color: var(--transparent-third);
+  }
+}
+
+.header-sidebar-btn {
+  font-size: $title-font-size;
+  font-weight: bold;
+  border-top: 1px solid var(--login-page-background-color);
+  border-bottom: 1px solid var(--login-page-background-color);
+  padding: 20px 15px;
+  margin-top: -1px;
+  background-color: inherit;
+
+  &.logout {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: var(--error-color);
+  }
+
+  &.margin-top {
+    margin-top: 80px;
+  }
+}

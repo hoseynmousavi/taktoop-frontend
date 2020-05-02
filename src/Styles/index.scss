@@ -1,0 +1,89 @@
+@import "css-variables.css";
+@import "home";
+@import "header";
+@import "animations";
+@import "signup";
+@import "image-show";
+@import "Material.css";
+@import "MaterialInput.css";
+@import "hamburger";
+@import "my-slider";
+@import "not-found";
+@import "fluent";
+@import "~react-notifications/lib/notifications.css";
+
+@font-face {
+  font-family: "IranSans";
+  src: url("../Media/Fonts/IRANSans.woff") format("woff");
+  font-display: swap;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: var(--dark-color);
+  direction: rtl;
+  font-family: "IranSans", serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button, input, textarea, h4, h3, h2, h1, select, video, track {
+  padding: 0;
+  margin: 0;
+  border: none;
+  font-family: "IranSans", serif;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  padding-top: 80px;
+  min-height: calc(100vh - 80px);
+  background: linear-gradient(to top right, var(--border-color), var(--background-color));
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: var(--background-color);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: var(--border-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--secondary-color);
+}
+
+::-moz-selection { /* Code for Firefox */
+  color: white;
+  background: var(--primary-color);
+}
+
+::selection {
+  color: white;
+  background: var(--primary-color);
+}

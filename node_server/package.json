@@ -1,0 +1,12 @@
+{
+  "name": "node_server",
+  "version": "1.0.0",
+  "description": "nodejs handle front",
+  "main": "index.js",
+  "author": "Hoseyn Mousavi",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "express": "^4.17.1"
+  }
+}
