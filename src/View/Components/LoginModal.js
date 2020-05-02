@@ -42,7 +42,11 @@ class LoginModal extends PureComponent
                         toggleLoginModal()
                         NotificationManager.success("ورود با موفقیت انجام شد!")
                     })
-                    .catch(() => this.setState({...this.state, serverError: true, loading: false}))
+                    .catch(e =>
+                    {
+                        if (e?.response.status === 404) this.setState({...this.state, serverError: false, loading: false}, () => NotificationManager.error("کاربری با اطلاعات وارد شده یافت نشد!"))
+                        else this.setState({...this.state, serverError: true, loading: false})
+                    })
             })
         }
         else
