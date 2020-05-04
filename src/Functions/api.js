@@ -6,7 +6,7 @@ export const REST_URL = "http://restful.taktoopcasino.com"
 
 function get(url, param = "", dontToast)
 {
-    const token = !localStorage.hasOwnProperty("admin") ? null : JSON.parse(localStorage.getItem("admin")).token
+    const token = !localStorage.hasOwnProperty("user") ? null : JSON.parse(localStorage.getItem("user")).token
     return axios.get(encodeURI(REST_URL + "/" + url + "/" + param), {headers: token ? {"Authorization": `${token}`} : null})
         .then((res) =>
         {
@@ -32,7 +32,7 @@ function get(url, param = "", dontToast)
 
 function post(url, data, param = "", progress)
 {
-    const token = !localStorage.hasOwnProperty("admin") ? null : JSON.parse(localStorage.getItem("admin")).token
+    const token = !localStorage.hasOwnProperty("user") ? null : JSON.parse(localStorage.getItem("user")).token
     return axios.post(encodeURI(REST_URL + "/" + url + "/" + param), data, {
         headers: token ? {"Authorization": `${token}`} : null,
         onUploadProgress: e => progress ? progress(e) : null,
@@ -47,7 +47,7 @@ function post(url, data, param = "", progress)
 
 function patch(url, data, param = "", progress)
 {
-    const token = JSON.parse(localStorage.getItem("admin")).token
+    const token = JSON.parse(localStorage.getItem("user")).token
     const sendUrl = param === "" ? REST_URL + "/" + url + "/" : REST_URL + "/" + url + "/" + param + "/"
     return axios.patch(encodeURI(sendUrl), data, {
         headers: {"Authorization": `${token}`},
@@ -63,7 +63,7 @@ function patch(url, data, param = "", progress)
 
 function del(url, data, param = "")
 {
-    const token = JSON.parse(localStorage.getItem("admin")).token
+    const token = JSON.parse(localStorage.getItem("user")).token
     const sendUrl = param === "" ? REST_URL + "/" + url + "/" : REST_URL + "/" + url + "/" + param + "/"
     return axios.delete(encodeURI(sendUrl), {headers: {"Authorization": `${token}`}, data})
         .then((res) => res.data)

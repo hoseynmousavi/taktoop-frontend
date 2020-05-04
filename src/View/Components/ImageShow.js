@@ -1,4 +1,5 @@
 import React, {PureComponent} from "react"
+import {Helmet} from "react-helmet"
 
 class ImageShow extends PureComponent
 {
@@ -37,6 +38,7 @@ class ImageShow extends PureComponent
             copyImage.onclick = () => document.body.clientWidth > 480 && window.history.back()
             copyImage.id = "picture"
             copyImage.style.margin = "0"
+            copyImage.style.maxHeight = "initial"
             copyImage.style.position = "fixed"
             copyImage.style.top = rect.top + "px"
             copyImage.style.height = rect.height + "px"
@@ -45,6 +47,7 @@ class ImageShow extends PureComponent
             copyImage.style.right = "auto"
             copyImage.style.zIndex = "11"
             document.body.append(copyImage)
+            this.img.style.opacity = "0"
             copyImage.style.transition = "all ease-in-out 0.2s"
             setTimeout(() =>
             {
@@ -81,7 +84,11 @@ class ImageShow extends PureComponent
             copyImage.style.left = rect.left + "px"
             copyImage.style.borderRadius = this.img.style.borderRadius
             copyImage.style.right = "auto"
-            setTimeout(() => this.setState({...this.state, showBack: false}, () => copyImage.remove()), 300)
+            setTimeout(() => this.setState({...this.state, showBack: false}, () =>
+            {
+                this.img.style.opacity = "1"
+                copyImage.remove()
+            }), 300)
         })
     }
 
@@ -94,6 +101,14 @@ class ImageShow extends PureComponent
         return <React.Fragment>
             <img className={className} src={src} alt={alt} ref={e => this.img = e} onClick={this.openImage}/>
             {showBack && <div className={`back-cont ${showPicture ? "" : "hide"}`} onClick={this.back}/>}
+            <Helmet>
+                {
+                    showBack ?
+                        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+                        :
+                        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+                }
+            </Helmet>
         </React.Fragment>
     }
 }

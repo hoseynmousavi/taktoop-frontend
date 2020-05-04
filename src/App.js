@@ -3,6 +3,7 @@ import {Route, Switch} from "react-router-dom"
 import {NotificationContainer} from "react-notifications"
 import Header from "./View/Components/Header"
 import LoginModal from "./View/Components/LoginModal"
+import PanelMain from "./View/Panel/PanelMain"
 
 const HomePage = lazy(() => import("./View/Pages/HomePage"))
 const SignupPage = lazy(() => import("./View/Pages/SignupPage"))
@@ -21,6 +22,14 @@ class App extends PureComponent
 
     componentDidMount()
     {
+        const {location} = this.props
+        if (location.pathname.includes("/show-picture"))
+        {
+            let currentPath = location.pathname.replace("/show-picture", "")
+            window.history.replaceState("", "", currentPath ? currentPath : "/")
+            document.location.reload()
+        }
+
         window.scroll({top: 0})
 
         if (localStorage.hasOwnProperty("user"))
@@ -46,17 +55,21 @@ class App extends PureComponent
         const {user, loginModal} = this.state
         return (
             <React.Fragment>
+
                 <Header user={user} toggleLoginModal={this.toggleLoginModal} logout={this.logout}/>
+
                 <main className="main">
                     <Suspense fallback={null}>
                         <Switch>
                             <Route path="/sign-up" render={() => <SignupPage setUser={this.setUser}/>}/>
+                            {user?.role === "admin" && <Route path="/panel" render={() => <PanelMain/>}/>}
                             <Route exact path="/" render={() => <HomePage/>}/>
                             <Route path="*" render={() => <NotFoundPage/>}/>
                         </Switch>
                     </Suspense>
-                    <NotificationContainer/>
                 </main>
+
+                <NotificationContainer/>
 
                 {loginModal && <LoginModal setUser={this.setUser} toggleLoginModal={this.toggleLoginModal}/>}
 
