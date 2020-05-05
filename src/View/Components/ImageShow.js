@@ -27,8 +27,9 @@ class ImageShow extends PureComponent
         if (this.state.showPicture) this.closeImage()
     }
 
-    openImage = () =>
+    openImage = e =>
     {
+        e.stopPropagation()
         this.setState({...this.state, showPicture: true, showBack: true}, () =>
         {
             document.body.style.overflow = "hidden"

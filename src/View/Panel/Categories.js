@@ -25,13 +25,22 @@ class Categories extends PureComponent
             .catch(() => this.setState({...this.state, isLoading: false, error: true}))
     }
 
-    toggleCreateModal = () => this.setState({...this.state, addModal: !this.state.addModal})
+    toggleCreateModal = () =>
+    {
+        const addModal = !this.state.addModal
+        this.setState({...this.state, addModal, category: addModal ? this.state.category : null})
+    }
 
-    addCategory = category => this.setState({...this.state, categories: {[category._id]: {...category}, ...this.state.categories}})
+    addOrUpdateCategory = category => this.setState({...this.state, categories: {[category._id]: {...category}, ...this.state.categories}})
+
+    openUpdate(category)
+    {
+        this.setState({...this.state, addModal: !this.state.addModal, category})
+    }
 
     render()
     {
-        const {addModal, categories, error, isLoading} = this.state
+        const {category, addModal, categories, error, isLoading} = this.state
         return (
             <div className="panel-categories-cont">
                 <div className="panel-table-title">
@@ -57,7 +66,7 @@ class Categories extends PureComponent
                                         </div>
                                         {
                                             Object.values(categories).map(category =>
-                                                <div key={category._id} className="panel-table-row wide">
+                                                <div key={category._id} className="panel-table-row wide" onClick={() => this.openUpdate(category)}>
                                                     <div className="panel-table-row-item">{category.title}</div>
                                                     <div className="panel-table-row-item">{category.description}</div>
                                                     <div className="panel-table-row-item">{category.address}</div>
@@ -75,7 +84,7 @@ class Categories extends PureComponent
 
                 <Material className="panel-add-item" backgroundColor="rgba(255,255,255,0.3)" onClick={this.toggleCreateModal}>+</Material>
 
-                {addModal && <CreateCategory toggleCreateModal={this.toggleCreateModal} addCategory={this.addCategory}/>}
+                {addModal && <CreateCategory toggleCreateModal={this.toggleCreateModal} addOrUpdateCategory={this.addOrUpdateCategory} category={category}/>}
 
             </div>
         )
