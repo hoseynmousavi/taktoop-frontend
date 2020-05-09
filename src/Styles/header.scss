@@ -84,6 +84,8 @@
   width: 55px;
   height: 55px;
   display: block;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
 }
 
 .header-name {
@@ -93,6 +95,8 @@
   @media screen and (max-width: 480px) {
     margin-left: 0;
     font-size: $big-font-size;
+    position: relative;
+    z-index: 5;
   }
 }
 
@@ -122,6 +126,8 @@
     width: 80%;
     background-color: white;
     z-index: 4;
+    border-radius: 10px 0 0 10px;
+    overflow: hidden;
   }
 }
 

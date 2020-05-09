@@ -45,26 +45,28 @@ class CreateCategory extends PureComponent
 
     submit = () =>
     {
+        const {parent_id} = this.props
         const title = this.title?.trim()
         const description = this.description?.trim()
         const address = this.address?.trim()
         const slider = this.slider
         const menu = this.menu
 
-        if (title && slider && menu)
+        if (title && ((!parent_id && slider && menu) || (parent_id && !slider && !menu)))
         {
             this.setState({...this.state, loading: true, loadingPercent: 0}, () =>
             {
                 let form = new FormData()
                 form.append("title", title)
+                parent_id && form.append("parent_id", parent_id)
                 description && form.append("description", description)
                 address && form.append("address", address)
                 compressImage(slider).then(slider =>
                 {
-                    form.append("slider_picture", slider)
+                    slider && form.append("slider_picture", slider)
                     compressImage(menu).then(menu =>
                     {
-                        form.append("menu_picture", menu)
+                        menu && form.append("menu_picture", menu)
                         api.post("category", form, "", e => this.setState({...this.state, loadingPercent: Math.floor((e.loaded * 100) / e.total)}))
                             .then(category =>
                             {
@@ -127,26 +129,14 @@ class CreateCategory extends PureComponent
 
     remove = () =>
     {
-        let result = window.confirm("از حذف مطمئنید؟")
-        if (result)
-        {
-            const {category} = this.props
-            api.del("category", {_id: category._id})
-                .then(() =>
-                {
-                    const {removeCategory, toggleCreateModal} = this.props
-                    NotificationManager.success("با موفقیت حذف شد!")
-                    removeCategory(category._id)
-                    toggleCreateModal()
-                })
-                .catch(() => NotificationManager.error("مشکلی پیش آمد! کانکشن خود را چک کنید!"))
-        }
+        const {removeCategory, category} = this.props
+        removeCategory(category._id)
     }
 
     render()
     {
         const {loading, sliderPre, menuPre, loadingPercent} = this.state
-        const {toggleCreateModal, category} = this.props
+        const {toggleCreateModal, category, parent_id} = this.props
         return (
             <React.Fragment>
                 {
@@ -155,7 +145,7 @@ class CreateCategory extends PureComponent
                         <div className="panel-upload-percent">{loadingPercent} %</div>
                     </div>
                 }
-                <div className="sign-up-page-loading-cont vertical-wide" onClick={loading ? null : toggleCreateModal}>
+                <div className={`sign-up-page-loading-cont ${!parent_id ? "vertical-wide" : ""}`} onClick={loading ? null : toggleCreateModal}>
                     <div className="sign-up-page modal" onClick={e => e.stopPropagation()}>
                         <div className="sign-up-page-title">{category ? "ویرایش" : "ساخت"} دسته‌بندی</div>
                         <MaterialInput className="sign-up-page-field"
@@ -174,50 +164,55 @@ class CreateCategory extends PureComponent
                                        onKeyDown={this.submitOnEnter}
                                        defaultValue={category?.description}
                         />
-                        <label className="panel-image-upload">
-                            <Material className="panel-image-upload-material">
-                                <div className="panel-image-upload-label">عکس اسلایدر</div>
-                                {
-                                    sliderPre || category?.slider_picture ?
-                                        <React.Fragment>
-                                            <img className="panel-image-upload-img" src={sliderPre ? sliderPre : REST_URL + category.slider_picture} alt=""/>
-                                            <PencilSvg className="panel-image-upload-edit"/>
-                                        </React.Fragment>
-                                        :
-                                        <React.Fragment>
-                                            <CameraSvg className="panel-image-upload-add"/>
-                                            <span className="sign-up-page-field-star">*</span>
-                                        </React.Fragment>
-                                }
-                                <input type="file" hidden accept="image/*" onChange={this.selectSlider}/>
-                            </Material>
-                        </label>
-                        <MaterialInput className="sign-up-page-field"
-                                       backgroundColor="var(--background-color)"
-                                       name="address"
-                                       label="آدرس اسلایدر"
-                                       getValue={this.setValue}
-                                       onKeyDown={this.submitOnEnter}
-                                       defaultValue={category?.address}
-                        />
-                        <label className="panel-image-upload">
-                            <Material className="panel-image-upload-material">
-                                <div className="panel-image-upload-label">عکس دسته‌بندی</div>
-                                {
-                                    menuPre || category?.menu_picture ?
-                                        <React.Fragment>
-                                            <img className="panel-image-upload-img" src={menuPre ? menuPre : REST_URL + category.menu_picture} alt=""/>
-                                            <PencilSvg className="panel-image-upload-edit"/>
-                                        </React.Fragment>
-                                        :
-                                        <React.Fragment>
-                                            <CameraSvg className="panel-image-upload-add"/>
-                                            <span className="sign-up-page-field-star">*</span>
-                                        </React.Fragment>
-                                }
-                                <input type="file" hidden accept="image/*" onChange={this.selectMenu}/>
-                            </Material>
-                        </label>
+                        {
+                            !parent_id &&
+                            <React.Fragment>
+                                <label className="panel-image-upload">
+                                    <Material className="panel-image-upload-material">
+                                        <div className="panel-image-upload-label">عکس اسلایدر</div>
+                                        {
+                                            sliderPre || category?.slider_picture ?
+                                                <React.Fragment>
+                                                    <img className="panel-image-upload-img" src={sliderPre ? sliderPre : REST_URL + category.slider_picture} alt=""/>
+                                                    <PencilSvg className="panel-image-upload-edit"/>
+                                                </React.Fragment>
+                                                :
+                                                <React.Fragment>
+                                                    <CameraSvg className="panel-image-upload-add"/>
+                                                    <span className="sign-up-page-field-star">*</span>
+                                                </React.Fragment>
+                                        }
+                                        <input type="file" hidden accept="image/*" onChange={this.selectSlider}/>
+                                    </Material>
+                                </label>
+                                <MaterialInput className="sign-up-page-field"
+                                               backgroundColor="var(--background-color)"
+                                               name="address"
+                                               label="آدرس اسلایدر"
+                                               getValue={this.setValue}
+                                               onKeyDown={this.submitOnEnter}
+                                               defaultValue={category?.address}
+                                />
+                                <label className="panel-image-upload">
+                                    <Material className="panel-image-upload-material">
+                                        <div className="panel-image-upload-label">عکس دسته‌بندی</div>
+                                        {
+                                            menuPre || category?.menu_picture ?
+                                                <React.Fragment>
+                                                    <img className="panel-image-upload-img" src={menuPre ? menuPre : REST_URL + category.menu_picture} alt=""/>
+                                                    <PencilSvg className="panel-image-upload-edit"/>
+                                                </React.Fragment>
+                                                :
+                                                <React.Fragment>
+                                                    <CameraSvg className="panel-image-upload-add"/>
+                                                    <span className="sign-up-page-field-star">*</span>
+                                                </React.Fragment>
+                                        }
+                                        <input type="file" hidden accept="image/*" onChange={this.selectMenu}/>
+                                    </Material>
+                                </label>
+                            </React.Fragment>
+                        }
                         {category && <Material className="panel-remove-btn" onClick={this.remove}>حذف</Material>}
                         <Material className={`login-modal-submit ${category ? "inline" : ""} ${loading ? "loading" : ""}`} onClick={loading ? null : category ? this.update : this.submit}>ثبت</Material>
                     </div>

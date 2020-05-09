@@ -121,6 +121,7 @@
 }
 
 .panel-table-row {
+  position: relative;
   display: flex;
   font-size: $regular-font-size;
   justify-content: space-between;
@@ -128,6 +129,18 @@
   padding: 10px 0;
   cursor: pointer;
   transition: all linear 0.2s;
+
+  &.padding-mobile {
+    &:hover {
+      .panel-table-row-edit {
+        opacity: 1;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      padding: 35px 0;
+    }
+  }
 
   @media screen and (max-width: 480px) {
     &.wide {
@@ -286,4 +299,44 @@
   border-radius: 5px;
   padding: 12px 0;
   cursor: pointer;
+}
+
+.panel-table-row-edit {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: var(--transparent-second);
+  fill: var(--dark-color);
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all linear 0.2s;
+
+  &:hover {
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  @media screen and (min-width: 480px) {
+    opacity: 0;
+  }
+
+  &.delete {
+    fill: var(--error-color);
+    right: 40px;
+  }
+
+}
+
+.panel-table-row-item-arrow {
+  width: 40px;
+  fill: var(--secondary-color);
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+
+  &.edit {
+    width: 25px;
+    padding: 5px;
+  }
 }
