@@ -83,8 +83,8 @@ class CreateCategory extends PureComponent
         else
         {
             if (!title) NotificationManager.warning("لطفا عنوان را وارد کنید!")
-            if (!slider) NotificationManager.warning("لطفا عکس اسلایدر را وارد کنید!")
-            if (!menu) NotificationManager.warning("لطفا عکس منو را وارد کنید!")
+            if (!slider && !parent_id) NotificationManager.warning("لطفا عکس اسلایدر را وارد کنید!")
+            if (!menu && !parent_id) NotificationManager.warning("لطفا عکس منو را وارد کنید!")
         }
     }
 
