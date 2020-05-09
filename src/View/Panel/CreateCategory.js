@@ -125,6 +125,24 @@ class CreateCategory extends PureComponent
         else NotificationManager.warning("تغییری ایجاد نکرده‌اید!")
     }
 
+    remove = () =>
+    {
+        let result = window.confirm("از حذف مطمئنید؟")
+        if (result)
+        {
+            const {category} = this.props
+            api.del("category", {_id: category._id})
+                .then(() =>
+                {
+                    const {removeCategory, toggleCreateModal} = this.props
+                    NotificationManager.success("با موفقیت حذف شد!")
+                    removeCategory(category._id)
+                    toggleCreateModal()
+                })
+                .catch(() => NotificationManager.error("مشکلی پیش آمد! کانکشن خود را چک کنید!"))
+        }
+    }
+
     render()
     {
         const {loading, sliderPre, menuPre, loadingPercent} = this.state
@@ -200,7 +218,8 @@ class CreateCategory extends PureComponent
                                 <input type="file" hidden accept="image/*" onChange={this.selectMenu}/>
                             </Material>
                         </label>
-                        <Material className={`login-modal-submit ${loading ? "loading" : ""}`} onClick={loading ? null : category ? this.update : this.submit}>ثبت</Material>
+                        {category && <Material className="panel-remove-btn" onClick={this.remove}>حذف</Material>}
+                        <Material className={`login-modal-submit ${category ? "inline" : ""} ${loading ? "loading" : ""}`} onClick={loading ? null : category ? this.update : this.submit}>ثبت</Material>
                     </div>
                 </div>
             </React.Fragment>

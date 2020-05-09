@@ -276,3 +276,14 @@
   color: var(--secondary-color);
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
 }
+
+.panel-remove-btn {
+  width: 25%;
+  margin: 15px 0 15px 2%;
+  display: inline-block;
+  background-color: var(--error-color);
+  color: white;
+  border-radius: 5px;
+  padding: 12px 0;
+  cursor: pointer;
+}

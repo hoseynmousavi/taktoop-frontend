@@ -31,7 +31,19 @@ class Categories extends PureComponent
         this.setState({...this.state, addModal, category: addModal ? this.state.category : null})
     }
 
-    addOrUpdateCategory = category => this.setState({...this.state, categories: {[category._id]: {...category}, ...this.state.categories}})
+    addOrUpdateCategory = category =>
+    {
+        const {categories} = this.state
+        if (categories[category._id]) this.setState({...this.state, categories: {...categories, [category._id]: {...category}}})
+        else this.setState({...this.state, categories: {[category._id]: {...category}, ...categories}})
+    }
+
+    removeCategory = id =>
+    {
+        const categories = {...this.state.categories}
+        delete categories[id]
+        this.setState({...this.state, categories})
+    }
 
     openUpdate(category)
     {
@@ -84,7 +96,7 @@ class Categories extends PureComponent
 
                 <Material className="panel-add-item" backgroundColor="rgba(255,255,255,0.3)" onClick={this.toggleCreateModal}>+</Material>
 
-                {addModal && <CreateCategory toggleCreateModal={this.toggleCreateModal} addOrUpdateCategory={this.addOrUpdateCategory} category={category}/>}
+                {addModal && <CreateCategory toggleCreateModal={this.toggleCreateModal} addOrUpdateCategory={this.addOrUpdateCategory} removeCategory={this.removeCategory} category={category}/>}
 
             </div>
         )
