@@ -3,6 +3,8 @@ import Material from "./Material"
 import {Link, NavLink} from "react-router-dom"
 import Hamburger from "./Hamburger"
 import Logo from "../../Media/Images/Logo.png"
+import api, {REST_URL} from "../../Functions/api"
+import SmoothArrowSvg from "../../Media/Svgs/SmoothArrowSvg"
 
 class Header extends PureComponent
 {
@@ -11,6 +13,7 @@ class Header extends PureComponent
         super(props)
         this.state = {
             collapseSidebar: true,
+            categories: {},
         }
         this.deltaX = 0
         this.posX = 0
@@ -26,6 +29,21 @@ class Header extends PureComponent
 
     componentDidMount()
     {
+        api.get("category")
+            .then(categories =>
+            {
+                this.setState({...this.state, catLoading: false, categories: categories.reduce((sum, cat) => ({...sum, [cat._id]: cat}), {})}, () =>
+                {
+                    categories.filter(item => !item.parent_id).forEach(item =>
+                    {
+                        let img = new Image()
+                        img.src = REST_URL + item.menu_picture
+                        img.onload = () => console.log("loaded img")
+                    })
+                })
+            })
+            .catch(() => this.setState({...this.state, catLoading: false, catError: true}))
+
         document.addEventListener("touchstart", this.onTouchStart)
         document.addEventListener("touchmove", this.onTouchMove)
         document.addEventListener("touchend", this.onTouchEnd)
@@ -138,56 +156,98 @@ class Header extends PureComponent
         this.props.logout()
     }
 
+    showDialog = (cat, e) =>
+    {
+        const rect = e.target.getBoundingClientRect()
+        const width = this.dialog.scrollWidth
+        const left = rect.left + rect.width - width > 0 ? rect.left + rect.width + "px" : width + 10 + "px"
+        const {showDialog} = this.state
+        if (showDialog) this.setState({...this.state, showCat: cat, left})
+        else this.openTimer = setTimeout(() => this.setState({...this.state, showDialog: true, showCat: cat, left}), 150)
+    }
+
+    closeDialog = () =>
+    {
+        clearTimeout(this.openTimer)
+        this.setState({...this.state, showDialog: false})
+    }
+
     render()
     {
-        const {collapseSidebar} = this.state
+        const {collapseSidebar, categories, showCat, showDialog, left} = this.state
         const {user, toggleLoginModal, logout} = this.props
         return (
             <div className="header-cont">
+                <div className="header-cont-main">
+                    <Material backgroundColor={!collapseSidebar ? "transparent" : "rgba(0,0,0,0.1)"} className={`header-hamburger-mobile-material ${!collapseSidebar ? "toggle" : ""}`}>
+                        <Hamburger className="header-hamburger-mobile" collapse={collapseSidebar} onClick={collapseSidebar ? this.showSidebar : this.hideSidebar}/>
+                    </Material>
 
-                <Material backgroundColor={!collapseSidebar ? "transparent" : "rgba(0,0,0,0.1)"} className={`header-hamburger-mobile-material ${!collapseSidebar ? "toggle" : ""}`}>
-                    <Hamburger className="header-hamburger-mobile" collapse={collapseSidebar} onClick={collapseSidebar ? this.showSidebar : this.hideSidebar}/>
-                </Material>
+                    <Link className="show-mobile" to="/"><h1 className="header-name">تک توپ</h1></Link>
 
-                <Link className="show-mobile" to="/"><h1 className="header-name">تک توپ</h1></Link>
+                    <div className="header-sidebar-back" style={{opacity: "0", height: "0"}} ref={e => this.sidebarBack = e} onClick={this.hideSidebar}/>
+                    <div className="header-sidebar-container" style={{transform: "translateX(100%)"}} ref={e => this.sidebar = e}>
+                        <Link to="/" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn margin-top">خانه</Material></Link>
+                        {
+                            !user ?
+                                <React.Fragment>
+                                    <NavLink to="/sign-up" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">ثبت نام</Material></NavLink>
+                                    <Material className="header-sidebar-btn" onClick={this.toggleLoginModal}>ورود</Material>
+                                </React.Fragment>
+                                :
+                                <Material className="header-sidebar-btn logout" onClick={this.logout}>خروج از حساب</Material>
+                        }
+                        <NavLink to="/about-us" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">درباره ما</Material></NavLink>
+                        {
+                            user?.role === "admin" &&
+                            <NavLink to="/panel" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">پنل اعضا</Material></NavLink>
+                        }
+                    </div>
 
-                <div className="header-sidebar-back" style={{opacity: "0", height: "0"}} ref={e => this.sidebarBack = e} onClick={this.hideSidebar}/>
-                <div className="header-sidebar-container" style={{transform: "translateX(100%)"}} ref={e => this.sidebar = e}>
-                    <Link to="/" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn margin-top">خانه</Material></Link>
-                    {
-                        !user ?
+                    <div className="header-section show-desktop">
+                        <Link to="/"><h1 className="header-name">تک توپ</h1></Link>
+                        {
+                            !user &&
                             <React.Fragment>
-                                <NavLink to="/sign-up" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">ثبت نام</Material></NavLink>
-                                <Material className="header-sidebar-btn" onClick={this.toggleLoginModal}>ورود</Material>
+                                <NavLink activeClassName="header-right-section-link-active" to="/sign-up"><Material className="header-right-section-link">ثبت نام</Material></NavLink>
+                                <Material className="header-right-section-link" onClick={toggleLoginModal}>ورود</Material>
                             </React.Fragment>
-                            :
-                            <Material className="header-sidebar-btn logout" onClick={this.logout}>خروج از حساب</Material>
-                    }
-                    <NavLink to="/about-us" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">درباره ما</Material></NavLink>
-                    {
-                        user?.role === "admin" &&
-                        <NavLink to="/panel" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">پنل اعضا</Material></NavLink>
-                    }
+                        }
+                        <NavLink activeClassName="header-right-section-link-active" to="/about-us"><Material className="header-right-section-link">درباره ما</Material></NavLink>
+                        {user && <Material className="header-right-section-link logout" onClick={logout}>خروج</Material>}
+                    </div>
+                    <div className="header-section">
+                        {
+                            user?.role === "admin" &&
+                            <NavLink activeClassName="header-right-section-link-active" className="show-desktop" to="/panel"><Material className="header-right-section-link">پنل اعضا</Material></NavLink>
+                        }
+                        <Link to="/"><img src={Logo} alt="تک توپ" className="header-logo"/></Link>
+                    </div>
                 </div>
 
-                <div className="header-section show-desktop">
-                    <Link to="/"><h1 className="header-name">تک توپ</h1></Link>
+                <div className="header-categories-nav" onMouseLeave={this.closeDialog}>
                     {
-                        !user &&
-                        <React.Fragment>
-                            <NavLink activeClassName="header-right-section-link-active" to="/sign-up"><Material className="header-right-section-link">ثبت نام</Material></NavLink>
-                            <Material className="header-right-section-link" onClick={toggleLoginModal}>ورود</Material>
-                        </React.Fragment>
+                        Object.values(categories).filter(item => !item.parent_id).map(cat =>
+                            <div key={cat._id} className="header-categories-nav-item" onMouseEnter={(e) => this.showDialog(cat, e)}>
+                                {cat.title}
+                                <SmoothArrowSvg className="header-categories-nav-arrow"/>
+                            </div>,
+                        )
                     }
-                    <NavLink activeClassName="header-right-section-link-active" to="/about-us"><Material className="header-right-section-link">درباره ما</Material></NavLink>
-                    {user && <Material className="header-right-section-link logout" onClick={logout}>خروج</Material>}
-                </div>
-                <div className="header-section">
-                    {
-                        user?.role === "admin" &&
-                        <NavLink activeClassName="header-right-section-link-active" className="show-desktop" to="/panel"><Material className="header-right-section-link">پنل اعضا</Material></NavLink>
-                    }
-                    <Link to="/"><img src={Logo} alt="تک توپ" className="header-logo"/></Link>
+
+                    <div className={`header-categories-dialog ${showDialog ? "show" : ""}`} ref={e => this.dialog = e} style={{left}}>
+                        <div className="header-categories-dialog-child">
+                            {
+                                Object.values(categories).filter(item => item.parent_id === showCat?._id).map(cat =>
+                                    <Material key={cat._id} className="header-categories-dialog-child-item">{cat.title}</Material>,
+                                )
+                            }
+                        </div>
+                        {
+                            showCat?.menu_picture &&
+                            <img className="header-categories-dialog-img" src={REST_URL + showCat.menu_picture} alt={showCat?.title}/>
+                        }
+                    </div>
                 </div>
             </div>
         )

@@ -1,10 +1,14 @@
 @import "variables";
 
 .sign-up-page-cont {
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 120px);
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media screen and (max-width: 480px) {
+    min-height: calc(100vh - 80px);
+  }
 }
 
 .sign-up-page {

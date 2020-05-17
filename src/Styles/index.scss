@@ -55,9 +55,14 @@ input[type=number]::-webkit-outer-spin-button {
 .main {
   display: flex;
   flex-direction: column;
-  padding-top: 80px;
-  min-height: calc(100vh - 80px);
+  padding-top: 120px;
+  min-height: calc(100vh - 120px);
   background: linear-gradient(to top right, var(--border-color), var(--background-color));
+
+  @media screen and (max-width: 480px) {
+    padding-top: 80px;
+    min-height: calc(100vh - 80px);
+  }
 }
 
 ::-webkit-scrollbar {
