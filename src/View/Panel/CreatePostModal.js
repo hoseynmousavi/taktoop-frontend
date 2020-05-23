@@ -48,20 +48,20 @@ class CreatePostModal extends PureComponent
             form.append("category_id", category_id)
             compressImage(picture).then(picture =>
             {
-            form.append("picture", picture)
-            api.post("post", form, "", e => this.setState({...this.state, loadingPercent: Math.floor((e.loaded * 100) / e.total)}))
-                .then(category =>
-                {
-                    const {addOrUpdatePost, toggleCreateModal} = this.props
-                    NotificationManager.success("با موفقیت ایجاد شد!")
-                    addOrUpdatePost(category)
-                    toggleCreateModal()
-                })
-                .catch(e =>
-                {
-                    if (e?.response?.data?.keyPattern?.title) this.setState({...this.state, loading: false}, () => NotificationManager.error("عنوان وارد شده تکراری است!"))
-                    else this.setState({...this.state, loading: false}, () => NotificationManager.error("مشکلی پیش آمد! کانکشن خود را چک کنید!"))
-                })
+                form.append("picture", picture)
+                api.post("post", form, "", e => this.setState({...this.state, loadingPercent: Math.floor((e.loaded * 100) / e.total)}))
+                    .then(category =>
+                    {
+                        const {addOrUpdatePost, toggleCreateModal} = this.props
+                        NotificationManager.success("با موفقیت ایجاد شد!")
+                        addOrUpdatePost(category)
+                        toggleCreateModal()
+                    })
+                    .catch(e =>
+                    {
+                        if (e?.response?.data?.keyPattern?.title) this.setState({...this.state, loading: false}, () => NotificationManager.error("عنوان وارد شده تکراری است!"))
+                        else this.setState({...this.state, loading: false}, () => NotificationManager.error("مشکلی پیش آمد! کانکشن خود را چک کنید!"))
+                    })
             })
         }
         else

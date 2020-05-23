@@ -1,9 +1,11 @@
 import React, {PureComponent} from "react"
-import {Switch} from "react-router-dom"
+import {Switch, Route} from "react-router-dom"
 import {ClipLoader} from "react-spinners"
 import Material from "../Components/Material"
 import CreatePostModal from "./CreatePostModal"
-import api from "../../Functions/api"
+import api, {REST_URL} from "../../Functions/api"
+import {Link} from "react-router-dom"
+import ShowPost from "./ShowPost"
 
 class Posts extends PureComponent
 {
@@ -13,6 +15,7 @@ class Posts extends PureComponent
         this.state = {
             categories: {},
             posts: {},
+            isLoading: true,
         }
     }
 
@@ -21,7 +24,7 @@ class Posts extends PureComponent
     componentDidMount()
     {
         api.get("post")
-            .then(posts => this.setState({...this.state, posts: posts.reduce((sum, post) => ({...sum, [post._id]: post}), {})}))
+            .then(posts => this.setState({...this.state, isLoading: false, posts: posts.reduce((sum, post) => ({...sum, [post._id]: post}), {})}))
 
         api.get("category")
             .then(categories => this.setState({...this.state, categories: categories.reduce((sum, cat) => ({...sum, [cat._id]: cat}), {})}))
@@ -40,6 +43,8 @@ class Posts extends PureComponent
         return (
             <div className="panel-categories-cont">
                 <Switch>
+                    <Route path="/panel/posts/:id" render={() => <ShowPost/>}/>
+
                     <React.Fragment>
                         <div className="panel-table-title">
                             پست‌ها
@@ -50,10 +55,15 @@ class Posts extends PureComponent
                                 :
                                 Object.values(posts).length === 0 && !isLoading ? <div className="panel-table-err-loading">پستی یافت نشد!</div>
                                     :
-                                    <div>
+                                    <div className="panel-posts-cont">
                                         {
-                                            Object.values(posts).map(post =>
-                                                <div key={post._id}>{post.title}</div>,
+                                            [...Object.values(posts), ...Object.values(posts), ...Object.values(posts), ...Object.values(posts), ...Object.values(posts), ...Object.values(posts), ...Object.values(posts)].map(post =>
+                                                <Link to={`/panel/posts/${post._id}`} className="panel-posts-item" key={post._id}>
+                                                    <img className="panel-posts-item-img" src={REST_URL + post.picture} alt={post.title}/>
+                                                    <div className="panel-posts-item-title">{post.title}</div>
+                                                    <div className="panel-posts-item-cat">{categories[post.category_id]?.title}</div>
+                                                    <div className="panel-posts-item-desc">{post.short_description}</div>
+                                                </Link>,
                                             )
                                         }
                                     </div>
