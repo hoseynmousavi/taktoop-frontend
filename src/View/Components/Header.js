@@ -156,9 +156,9 @@ class Header extends PureComponent
         this.props.logout()
     }
 
-    showDialog = (cat, e) =>
+    showDialog = (cat, id) =>
     {
-        const rect = e.target.getBoundingClientRect()
+        const rect = document.getElementById(id)?.getBoundingClientRect()
         const width = this.dialog.scrollWidth
         const left = rect.left + rect.width - width > 0 ? rect.left + rect.width + "px" : width + 10 + "px"
         const {showDialog} = this.state
@@ -228,7 +228,7 @@ class Header extends PureComponent
                 <div className="header-categories-nav" onMouseLeave={this.closeDialog}>
                     {
                         Object.values(categories).filter(item => !item.parent_id).map(cat =>
-                            <div key={cat._id} className="header-categories-nav-item" onMouseEnter={(e) => this.showDialog(cat, e)}>
+                            <div key={cat._id} id={cat._id} className="header-categories-nav-item" onMouseEnter={() => this.showDialog(cat, cat._id)}>
                                 {cat.title}
                                 <SmoothArrowSvg className="header-categories-nav-arrow"/>
                             </div>,

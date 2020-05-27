@@ -234,13 +234,13 @@
   font-size: $regular-font-size;
   opacity: 0;
   display: flex;
-  transform: scale(0.3) translateX(-100%);
+  transform: translateX(-100%);
   transform-origin: top left;
   height: 0;
   transition: all ease 0.2s, height ease 0s 0.3s;
 
   &.show {
-    transform: scale(1) translateX(-100%);
+    transform: translateX(-100%);
     opacity: 1;
     height: 500px;
     transition: all ease 0.2s, height ease 0s;

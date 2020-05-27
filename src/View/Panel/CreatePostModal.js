@@ -147,7 +147,7 @@ class CreatePostModal extends PureComponent
                                        label={<span>عنوان <span className="sign-up-page-field-star">*</span></span>}
                                        getValue={this.setValue}
                                        onKeyDown={this.submitOnEnter}
-                                       defaultValue={update.title}
+                                       defaultValue={update?.title}
                         />
                         <MaterialInput className="sign-up-page-area"
                                        isTextArea={true}
@@ -156,10 +156,10 @@ class CreatePostModal extends PureComponent
                                        maxLength={250}
                                        label={<span>توضیحات کوتاه <span className="sign-up-page-field-star">*</span></span>}
                                        getValue={this.setValue}
-                                       defaultValue={update.short_description}
+                                       defaultValue={update?.short_description}
                         />
 
-                        <select className="panel-select-box" onChange={this.categorySelect} defaultValue={update.category_id}>
+                        <select className="panel-select-box" onChange={this.categorySelect} defaultValue={update?.category_id}>
                             <option value="0">انتخاب دسته بندی *</option>
                             {
                                 Object.values(categories).filter(cat => cat.parent_id).map(item =>
