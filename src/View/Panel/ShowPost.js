@@ -1,10 +1,11 @@
 import React, {PureComponent} from "react"
-import api, {REST_URL} from "../../Functions/api"
+import api from "../../Functions/api"
 import {ClipLoader} from "react-spinners"
 import Material from "../Components/Material"
-import GarbageSvg from "../../Media/Svgs/GarbageSvg"
-import PencilSvg from "../../Media/Svgs/Pencil"
-import SmoothArrowSvg from "../../Media/Svgs/SmoothArrowSvg"
+import PostDescription from "./PostDescription"
+import {NotificationManager} from "react-notifications"
+import AddDescription from "./AddDescription"
+import compressImage from "../../Helpers/compressImage"
 
 class ShowPost extends PureComponent
 {
@@ -20,57 +21,171 @@ class ShowPost extends PureComponent
     {
         const {title} = this.props
         api.get("post", `?title=${title}`)
-            .then(post => this.setState({...this.state, post, isLoading: false}))
+            .then(post => this.setState({...this.state, post: {...post, post_descriptions: post.post_descriptions.reduce((sum, desc) => ({...sum, [desc._id]: desc}), {})}, isLoading: false}))
             .catch(() => this.setState({...this.state, isLoading: false, err: true}))
+    }
+
+    updatePostDescription = fields =>
+    {
+        api.patch("post-description", fields)
+            .then(updated =>
+            {
+                const post = {...this.state.post}
+                post.post_descriptions[updated._id] = {...updated}
+                this.setState({...this.state, post})
+            })
+            .catch(() => NotificationManager.error("مشکلی پیش آمد! کانکشن خود را بررسی کنید!"))
+    }
+
+    addPostDescription = newDesc =>
+    {
+        const post = {...this.state.post}
+        post.post_descriptions[newDesc._id] = {...newDesc}
+        this.setState({...this.state, post})
+    }
+
+    toggleAddDescription = () => this.setState({...this.state, addDescription: !this.state.addDescription, update: undefined})
+
+    toggleAddBoldDescription = () => this.setState({...this.state, addBoldDescription: !this.state.addBoldDescription, update: undefined})
+
+    toggleUpdateDescription = update => this.setState({...this.state, addDescription: !this.state.addDescription, update})
+
+    toggleUpdateBoldDescription = update => this.setState({...this.state, addBoldDescription: !this.state.addDescription, update})
+
+    deleteDesc = item =>
+    {
+        const confirm = window.confirm("مطمئنید؟")
+        if (confirm)
+        {
+            api.del("post-description", {_id: item._id})
+                .then(() =>
+                {
+                    const post = {...this.state.post}
+                    delete post.post_descriptions[item._id]
+                    this.setState({...this.state, post})
+                })
+        }
+    }
+
+    selectPicture = e =>
+    {
+        const file = e.target.files[0]
+        e.target.value = ""
+        this.setState({...this.state, sendLoading: true}, () =>
+        {
+            const {post} = this.state
+            let form = new FormData()
+            compressImage(file).then(file =>
+            {
+                form.append("content", file)
+                form.append("type", "picture")
+                form.append("post_id", post._id)
+                form.append("order", (Object.values(post.post_descriptions).length + 1).toString())
+                api.post("post-description", form, "", e => this.setState({...this.state, loadingPercent: Math.floor((e.loaded * 100) / e.total)}))
+                    .then(newDesc =>
+                    {
+                        const post = {...this.state.post}
+                        post.post_descriptions[newDesc._id] = {...newDesc}
+                        this.setState({...this.state, post, sendLoading: undefined, loadingPercent: undefined})
+                    })
+                    .catch(() => NotificationManager.error("مشکلی پیش آمد! کانکشن خود را بررسی کنید!"))
+            })
+        })
+    }
+
+    selectVideo = e =>
+    {
+        const file = e.target.files[0]
+        e.target.value = ""
+        this.setState({...this.state, sendLoading: true}, () =>
+        {
+            const {post} = this.state
+            let form = new FormData()
+            form.append("content", file)
+            form.append("type", "video")
+            form.append("post_id", post._id)
+            form.append("order", (Object.values(post.post_descriptions).length + 1).toString())
+            api.post("post-description", form, "", e => this.setState({...this.state, loadingPercent: Math.floor((e.loaded * 100) / e.total)}))
+                .then(newDesc =>
+                {
+                    const post = {...this.state.post}
+                    post.post_descriptions[newDesc._id] = {...newDesc}
+                    this.setState({...this.state, post, sendLoading: undefined, loadingPercent: undefined})
+                })
+        })
     }
 
     render()
     {
-        const {err, isLoading, post} = this.state
+        const {err, isLoading, post, addDescription, addBoldDescription, update, loadingPercent, sendLoading} = this.state
         if (err) return <div className="panel-table-err-loading">مشکلی پیش آمد! کانکشن خود را بررسی کنید!</div>
         else if (isLoading) return <div className="panel-table-err-loading"><ClipLoader size={19} color="var(--primary-color)"/></div>
         return (
-            <div>
-                <div className="panel-table-title">
-                    پست {post.title}
-                </div>
-                <div className="panel-post-description-cont">
+            <React.Fragment>
+                {
+                    sendLoading &&
+                    <div className="sign-up-page-loading-cont override">
+                        <div className="panel-upload-percent">{loadingPercent} %</div>
+                    </div>
+                }
+                <div>
+                    <div className="panel-table-title">
+                        پست {post.title}
+                    </div>
+                    <div className="panel-post-description-cont">
+                        {
+                            Object.values(post.post_descriptions).length > 0 ?
+                                Object.values(post.post_descriptions).sort((a, b) => a.order - b.order).map(item =>
+                                    <PostDescription key={item._id}
+                                                     toggleUpdateBoldDescription={this.toggleUpdateBoldDescription}
+                                                     toggleUpdateDescription={this.toggleUpdateDescription}
+                                                     length={Object.values(post.post_descriptions).length}
+                                                     item={item}
+                                                     updatePostDescription={this.updatePostDescription}
+                                                     deleteDesc={this.deleteDesc}
+                                    />,
+                                )
+                                :
+                                <div className="panel-table-err-loading">بدون محتوا!</div>
+                        }
+                    </div>
+                    <div className="panel-post-add-desc-menu">
+                        <Material className="panel-post-add-desc-menu-item" onClick={this.toggleAddDescription}>+ توضیحات</Material>
+                        <Material className="panel-post-add-desc-menu-item" onClick={this.toggleAddBoldDescription}>+ متن بلد</Material>
+                        <label>
+                            <Material className="panel-post-add-desc-menu-item">+ عکس</Material>
+                            <input hidden type="file" accept="image/*" onChange={this.selectPicture}/>
+                        </label>
+                        <label>
+                            <Material className="panel-post-add-desc-menu-item">+ ویدئو</Material>
+                            <input hidden type="file" accept="video/*" onChange={this.selectVideo}/>
+                        </label>
+                    </div>
+
+
                     {
-                        post.post_descriptions.length > 0 ?
-                            post.post_descriptions.map(item =>
-                                <div key={item._id} className="panel-post-description">
-                                    <Material className="panel-post-description-delete"><GarbageSvg/></Material>
-                                    <Material className="panel-post-description-edit"><PencilSvg/></Material>
-                                    <Material className="panel-post-description-order">{item.order}</Material>
-                                    <SmoothArrowSvg className="panel-post-description-order-up"/>
-                                    <SmoothArrowSvg className="panel-post-description-order-down"/>
-                                    {
-                                        item.type === "description" ?
-                                            <div className="panel-post-description-desc">{item.content}</div>
-                                            :
-                                            item.type === "bold" ?
-                                                <div className="panel-post-description-desc bold">{item.content}</div>
-                                                :
-                                                item.type === "picture" ?
-                                                    <img className="panel-post-description-img-video" src={REST_URL + item.content} alt={post.title}/>
-                                                    :
-                                                    <video className="panel-post-description-img-video">
-                                                        <source src={REST_URL + item.content}/>
-                                                    </video>
-                                    }
-                                </div>,
-                            )
-                            :
-                            <div className="panel-table-err-loading">بدون محتوا!</div>
+                        addDescription &&
+                        <AddDescription update={update}
+                                        post_id={post._id}
+                                        order={Object.values(post.post_descriptions).length + 1}
+                                        toggleAddDescription={this.toggleAddDescription}
+                                        addPostDescription={this.addPostDescription}
+                        />
                     }
+
+                    {
+                        addBoldDescription &&
+                        <AddDescription update={update}
+                                        isBold={true}
+                                        post_id={post._id}
+                                        order={Object.values(post.post_descriptions).length + 1}
+                                        toggleAddDescription={this.toggleAddBoldDescription}
+                                        addPostDescription={this.addPostDescription}
+                        />
+                    }
+
                 </div>
-                <div className="panel-post-add-desc-menu">
-                    <Material className="panel-post-add-desc-menu-item">+ توضیحات</Material>
-                    <Material className="panel-post-add-desc-menu-item">+ متن بلد</Material>
-                    <Material className="panel-post-add-desc-menu-item">+ عکس</Material>
-                    <Material className="panel-post-add-desc-menu-item">+ ویدئو</Material>
-                </div>
-            </div>
+            </React.Fragment>
         )
     }
 }

@@ -47,6 +47,17 @@
   height: 100px;
   width: calc(100% - 2px);
   margin-bottom: 20px;
+
+  &.add-desc {
+    height: 250px;
+    margin-bottom: 40px;
+
+    &.bold {
+      textarea {
+        font-weight: bold;
+      }
+    }
+  }
 }
 
 .sign-up-page-field-star {

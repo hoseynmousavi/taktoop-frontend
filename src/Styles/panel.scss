@@ -408,7 +408,7 @@
   background-color: var(--login-page-background-color);
   border-radius: 5px;
   margin: 10px 0;
-  padding: 15px 10px 15px 200px;
+  padding: 15px 10px 15px 130px;
   position: relative;
 }
 
@@ -439,6 +439,16 @@
     fill: var(--error-color);
     width: 18px;
   }
+}
+
+.panel-post-description-sub {
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  left: -12px;
+  height: 20px;
+  fill: var(--success-color);
+  width: 21px;
 }
 
 .panel-post-description-edit {
@@ -509,6 +519,7 @@
   line-height: 30px;
   text-align: justify;
   text-align-last: right;
+  white-space: pre-wrap;
 
   &.bold {
     font-weight: bold;
@@ -520,6 +531,7 @@
   width: 100%;
   display: block;
   border-radius: 5px;
+  user-select: none;
 }
 
 .panel-post-add-desc-menu {
