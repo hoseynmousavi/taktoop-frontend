@@ -40,11 +40,23 @@ class PostDescription extends PureComponent
     render()
     {
         const {order} = this.state
-        const {item, toggleUpdateDescription, toggleUpdateBoldDescription, deleteDesc} = this.props
+        const {item, toggleUpdateDescription, toggleUpdateBoldDescription, toggleUpdateImgVideo, deleteDesc} = this.props
         return (
             <div className="panel-post-description">
                 <Material className="panel-post-description-delete" onClick={() => deleteDesc(item)}><GarbageSvg/></Material>
-                <Material className="panel-post-description-edit" onClick={() => item.type === "description" ? toggleUpdateDescription(item) : toggleUpdateBoldDescription(item)}><PencilSvg/></Material>
+                <label>
+                    <Material className="panel-post-description-edit" onClick={() => item.type === "description" ? toggleUpdateDescription(item) : item.type === "bold" ? toggleUpdateBoldDescription(item) : null}>
+                        {
+                            item.type === "picture" || item.type === "video" ?
+                                <React.Fragment>
+                                    <PencilSvg/>
+                                    <input hidden type="file" accept={item.type === "picture" ? "image/*" : "video/*"} onChange={e => toggleUpdateImgVideo(e, item)}/>
+                                </React.Fragment>
+                                :
+                                <PencilSvg/>
+                        }
+                    </Material>
+                </label>
                 <Material className="panel-post-description-order">{order ? order : item.order}</Material>
                 <SmoothArrowSvg className="panel-post-description-order-up" onClick={this.setOrderUp}/>
                 <SmoothArrowSvg className="panel-post-description-order-down" onClick={this.setOrderDown}/>
@@ -57,9 +69,9 @@ class PostDescription extends PureComponent
                             <div className="panel-post-description-desc bold">{item.content}</div>
                             :
                             item.type === "picture" ?
-                                <img className="panel-post-description-img-video" src={REST_URL + item.content} alt=""/>
+                                <img className="panel-post-description-img-video" key={item.content} src={REST_URL + item.content} alt=""/>
                                 :
-                                <video className="panel-post-description-img-video">
+                                <video key={item.content} className="panel-post-description-img-video">
                                     <source src={REST_URL + item.content}/>
                                 </video>
                 }

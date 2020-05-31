@@ -48,6 +48,31 @@ class ShowPost extends PureComponent
 
     toggleAddBoldDescription = () => this.setState({...this.state, addBoldDescription: !this.state.addBoldDescription, update: undefined})
 
+    toggleUpdateImgVideo = (e, desc) =>
+    {
+        const file = e.target.files[0]
+        e.target.value = ""
+        this.setState({...this.state, sendLoading: true}, () =>
+        {
+            let form = new FormData()
+            compressImage(file).then(file =>
+            {
+                form.append("_id", desc._id)
+                form.append("type", desc.type)
+                form.append("content", file)
+                api.patch("post-description", form, "", e => this.setState({...this.state, loadingPercent: Math.floor((e.loaded * 100) / e.total)}))
+                    .then(updated =>
+                    {
+                        console.log(updated)
+                        const post = {...this.state.post}
+                        post.post_descriptions[updated._id] = {...updated}
+                        this.setState({...this.state, post, sendLoading: undefined, loadingPercent: undefined})
+                    })
+                    .catch(() => NotificationManager.error("مشکلی پیش آمد! کانکشن خود را بررسی کنید!"))
+            })
+        })
+    }
+
     toggleUpdateDescription = update => this.setState({...this.state, addDescription: !this.state.addDescription, update})
 
     toggleUpdateBoldDescription = update => this.setState({...this.state, addBoldDescription: !this.state.addDescription, update})
@@ -143,6 +168,7 @@ class ShowPost extends PureComponent
                                                      item={item}
                                                      updatePostDescription={this.updatePostDescription}
                                                      deleteDesc={this.deleteDesc}
+                                                     toggleUpdateImgVideo={this.toggleUpdateImgVideo}
                                     />,
                                 )
                                 :

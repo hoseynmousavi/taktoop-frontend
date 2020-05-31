@@ -408,7 +408,7 @@
   background-color: var(--login-page-background-color);
   border-radius: 5px;
   margin: 10px 0;
-  padding: 15px 10px 15px 130px;
+  padding: 15px 10px 15px 152px;
   position: relative;
 }
 
@@ -416,7 +416,7 @@
   cursor: pointer;
   position: absolute;
   top: 15px;
-  left: 90px;
+  left: 112px;
   background-color: var(--background-color);
   width: 30px;
   display: flex;
@@ -445,7 +445,7 @@
   cursor: pointer;
   position: absolute;
   top: 20px;
-  left: -12px;
+  left: 8px;
   height: 20px;
   fill: var(--success-color);
   width: 21px;
@@ -455,7 +455,7 @@
   cursor: pointer;
   position: absolute;
   top: 15px;
-  left: 50px;
+  left: 72px;
   background-color: var(--background-color);
   width: 30px;
   display: flex;
@@ -483,7 +483,7 @@
 .panel-post-description-order {
   position: absolute;
   top: 15px;
-  left: 10px;
+  left: 32px;
   background-color: var(--background-color);
   width: 30px;
   display: flex;
@@ -498,7 +498,7 @@
   position: absolute;
   top: 0;
   transform: rotate(90deg);
-  left: 16px;
+  left: 38px;
   width: 19px;
   fill: var(--text-light-color);
   cursor: pointer;
@@ -508,14 +508,14 @@
   position: absolute;
   top: 41px;
   transform: rotate(-90deg);
-  left: 16px;
+  left: 38px;
   width: 19px;
   fill: var(--text-light-color);
   cursor: pointer;
 }
 
 .panel-post-description-desc {
-  font-size: $title-font-size;
+  font-size: $regular-font-size;
   line-height: 30px;
   text-align: justify;
   text-align-last: right;
