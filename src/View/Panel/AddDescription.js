@@ -68,7 +68,6 @@ class AddDescription extends PureComponent
                                    isTextArea={true}
                                    backgroundColor="var(--background-color)"
                                    name="description"
-                                   maxLength={250}
                                    label={<span>توضیحات <span className="sign-up-page-field-star">*</span></span>}
                                    getValue={this.setValue}
                                    defaultValue={update?.content}
