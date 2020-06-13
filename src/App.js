@@ -4,6 +4,7 @@ import {NotificationContainer} from "react-notifications"
 import Header from "./View/Components/Header"
 import LoginModal from "./View/Components/LoginModal"
 import PanelMain from "./View/Panel/PanelMain"
+import api, {REST_URL} from "./Functions/api"
 
 const HomePage = lazy(() => import("./View/Pages/HomePage"))
 const SignupPage = lazy(() => import("./View/Pages/SignupPage"))
@@ -17,6 +18,8 @@ class App extends PureComponent
         this.state = {
             user: null,
             loginModal: false,
+            categories: {},
+            catLoading: true,
         }
     }
 
@@ -31,6 +34,21 @@ class App extends PureComponent
         }
 
         window.scroll({top: 0})
+
+        api.get("category")
+            .then(categories =>
+            {
+                this.setState({...this.state, catLoading: false, categories: categories.reduce((sum, cat) => ({...sum, [cat._id]: cat}), {})}, () =>
+                {
+                    categories.filter(item => !item.parent_id).forEach(item =>
+                    {
+                        let img = new Image()
+                        img.src = REST_URL + item.menu_picture
+                        img.onload = () => console.log("loaded img")
+                    })
+                })
+            })
+            .catch(() => this.setState({...this.state, catLoading: false, catError: true}))
 
         if (localStorage.hasOwnProperty("user"))
         {
@@ -52,18 +70,18 @@ class App extends PureComponent
 
     render()
     {
-        const {user, loginModal} = this.state
+        const {user, loginModal, categories} = this.state
         return (
             <React.Fragment>
 
-                <Header user={user} toggleLoginModal={this.toggleLoginModal} logout={this.logout}/>
+                <Header user={user} categories={categories} toggleLoginModal={this.toggleLoginModal} logout={this.logout}/>
 
                 <main className="main">
                     <Suspense fallback={null}>
                         <Switch>
                             <Route path="/sign-up" render={() => <SignupPage setUser={this.setUser}/>}/>
                             {user?.role === "admin" && <Route path="/panel" render={() => <PanelMain/>}/>}
-                            <Route exact path="/" render={() => <HomePage/>}/>
+                            <Route exact path="/" render={() => <HomePage categories={categories}/>}/>
                             <Route path="*" render={() => <NotFoundPage/>}/>
                         </Switch>
                     </Suspense>

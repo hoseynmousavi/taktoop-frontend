@@ -3,8 +3,9 @@ import Material from "./Material"
 import {Link, NavLink} from "react-router-dom"
 import Hamburger from "./Hamburger"
 import Logo from "../../Media/Images/Logo.png"
-import api, {REST_URL} from "../../Functions/api"
+import {REST_URL} from "../../Functions/api"
 import SmoothArrowSvg from "../../Media/Svgs/SmoothArrowSvg"
+import MobileCategory from "./MobileCategory"
 
 class Header extends PureComponent
 {
@@ -13,7 +14,6 @@ class Header extends PureComponent
         super(props)
         this.state = {
             collapseSidebar: true,
-            categories: {},
         }
         this.deltaX = 0
         this.posX = 0
@@ -29,21 +29,6 @@ class Header extends PureComponent
 
     componentDidMount()
     {
-        api.get("category")
-            .then(categories =>
-            {
-                this.setState({...this.state, catLoading: false, categories: categories.reduce((sum, cat) => ({...sum, [cat._id]: cat}), {})}, () =>
-                {
-                    categories.filter(item => !item.parent_id).forEach(item =>
-                    {
-                        let img = new Image()
-                        img.src = REST_URL + item.menu_picture
-                        img.onload = () => console.log("loaded img")
-                    })
-                })
-            })
-            .catch(() => this.setState({...this.state, catLoading: false, catError: true}))
-
         document.addEventListener("touchstart", this.onTouchStart)
         document.addEventListener("touchmove", this.onTouchMove)
         document.addEventListener("touchend", this.onTouchEnd)
@@ -174,8 +159,8 @@ class Header extends PureComponent
 
     render()
     {
-        const {collapseSidebar, categories, showCat, showDialog, left} = this.state
-        const {user, toggleLoginModal, logout} = this.props
+        const {collapseSidebar, showCat, showDialog, left} = this.state
+        const {user, toggleLoginModal, categories, logout} = this.props
         return (
             <div className="header-cont">
                 <div className="header-cont-main">
@@ -189,19 +174,23 @@ class Header extends PureComponent
                     <div className="header-sidebar-container" style={{transform: "translateX(100%)"}} ref={e => this.sidebar = e}>
                         <Link to="/" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn margin-top">خانه</Material></Link>
                         {
-                            !user ?
-                                <React.Fragment>
-                                    <NavLink to="/sign-up" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">ثبت نام</Material></NavLink>
-                                    <Material className="header-sidebar-btn" onClick={this.toggleLoginModal}>ورود</Material>
-                                </React.Fragment>
-                                :
-                                <Material className="header-sidebar-btn logout" onClick={this.logout}>خروج از حساب</Material>
+                            !user &&
+                            <React.Fragment>
+                                <NavLink to="/sign-up" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">ثبت نام</Material></NavLink>
+                                <Material className="header-sidebar-btn" onClick={this.toggleLoginModal}>ورود</Material>
+                            </React.Fragment>
                         }
                         <NavLink to="/about-us" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">درباره ما</Material></NavLink>
                         {
                             user?.role === "admin" &&
                             <NavLink to="/panel" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">پنل اعضا</Material></NavLink>
                         }
+                        {
+                            Object.values(categories).filter(item => !item.parent_id).map(cat =>
+                                <MobileCategory key={"mob-cat" + cat._id} childs={Object.values(categories).filter(item => item.parent_id === cat._id)} cat={cat} hideSidebar={this.hideSidebar}/>,
+                            )
+                        }
+                        {user && <Material className="header-sidebar-btn logout" onClick={this.logout}>خروج از حساب</Material>}
                     </div>
 
                     <div className="header-section show-desktop">
@@ -239,7 +228,7 @@ class Header extends PureComponent
                         <div className="header-categories-dialog-child">
                             {
                                 Object.values(categories).filter(item => item.parent_id === showCat?._id).map(cat =>
-                                    <Material key={cat._id} className="header-categories-dialog-child-item">{cat.title}</Material>,
+                                    <Link to={`/category/${cat._id}`} key={cat._id} className="header-categories-dialog-child-item">{cat.title}</Link>,
                                 )
                             }
                         </div>

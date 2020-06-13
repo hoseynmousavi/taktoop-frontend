@@ -3,3 +3,47 @@
 .home-page-cont {
   padding: 20px 5%;
 }
+
+.home-page-slider-cont {
+  display: block;
+  position: relative;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+  background-color: var(--login-page-background-color);
+}
+
+.home-page-slider-item {
+  width: 100%;
+  height: calc(100vh - 200px);
+  object-fit: cover;
+  display: block;
+}
+
+.home-page-slider-text {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  color: white;
+  background: linear-gradient(to top left, rgba(0, 0, 0, 0.6), transparent);
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  padding: 4%;
+  animation: slider-cont ease 1s;
+}
+
+.home-page-slider-text-title {
+  margin-bottom: 15px;
+  font-weight: bold;
+  font-size: $very-huge-font-size;
+  animation: slider-title ease 2s;
+}
+
+.home-page-slider-text-desc {
+  font-size: $big-font-size;
+  animation: slider-title ease 2.5s;
+}
