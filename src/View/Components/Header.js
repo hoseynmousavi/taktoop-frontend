@@ -228,7 +228,7 @@ class Header extends PureComponent
                         <div className="header-categories-dialog-child">
                             {
                                 Object.values(categories).filter(item => item.parent_id === showCat?._id).map(cat =>
-                                    <Link to={`/category/${cat._id}`} key={cat._id} className="header-categories-dialog-child-item">{cat.title}</Link>,
+                                    <Link to={`/category/${cat._id}`} key={cat._id} className="header-categories-dialog-child-item" onClick={this.closeDialog}>{cat.title}</Link>,
                                 )
                             }
                         </div>

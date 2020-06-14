@@ -20,17 +20,48 @@ class Posts extends PureComponent
             posts: {},
             isLoading: true,
         }
+        this.activeScrollHeight = 0
+        this.page = 2
     }
 
     toggleCreateModal = () => this.setState({...this.state, openModal: !this.state.openModal, post: undefined})
 
     componentDidMount()
     {
-        api.get("post")
+        api.get("post", `?limit=10&page=1`)
             .then(posts => this.setState({...this.state, isLoading: false, posts: posts.reduce((sum, post) => ({...sum, [post._id]: post}), {})}))
 
         api.get("category")
             .then(categories => this.setState({...this.state, categories: categories.reduce((sum, cat) => ({...sum, [cat._id]: cat}), {})}))
+
+        document.addEventListener("scroll", this.onScroll)
+    }
+
+    componentWillUnmount()
+    {
+        document.removeEventListener("scroll", this.onScroll)
+    }
+
+    onScroll = () =>
+    {
+        clearTimeout(this.timeout)
+        this.timeout = setTimeout(() =>
+        {
+            const {posts} = this.state
+            const scrollHeight = document.body ? document.body.scrollHeight : 0
+            if (Object.values(posts).length > 0 && window.innerHeight + window.scrollY >= scrollHeight - 200 && scrollHeight > this.activeScrollHeight)
+            {
+                this.setState({...this.state, isLoading: true}, () =>
+                {
+                    this.activeScrollHeight = scrollHeight
+                    api.get("post", `?limit=10&page=${this.page}`).then((data) =>
+                    {
+                        this.page += 1
+                        this.setState({...this.state, isLoading: false, posts: {...posts, ...data.reduce((sum, post) => ({...sum, [post._id]: {...post}}), {})}})
+                    })
+                })
+            }
+        }, 20)
     }
 
     addOrUpdatePost = post =>

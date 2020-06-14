@@ -3,9 +3,10 @@ import {Route, Switch} from "react-router-dom"
 import {NotificationContainer} from "react-notifications"
 import Header from "./View/Components/Header"
 import LoginModal from "./View/Components/LoginModal"
-import PanelMain from "./View/Panel/PanelMain"
 import api, {REST_URL} from "./Functions/api"
 
+const PanelMain = lazy(() => import("./View/Panel/PanelMain"))
+const CategoryPage = lazy(() => import("./View/Pages/CategoryPage"))
 const HomePage = lazy(() => import("./View/Pages/HomePage"))
 const SignupPage = lazy(() => import("./View/Pages/SignupPage"))
 const NotFoundPage = lazy(() => import("./View/Pages/NotFoundPage"))
@@ -80,6 +81,7 @@ class App extends PureComponent
                     <Suspense fallback={null}>
                         <Switch>
                             <Route path="/sign-up" render={() => <SignupPage setUser={this.setUser}/>}/>
+                            <Route path="/category/:id" render={route => <CategoryPage key={route.match.params.id} category={categories[route.match.params.id]} parent={categories[categories[route.match.params.id]?.parent_id]}/>}/>
                             {user?.role === "admin" && <Route path="/panel" render={() => <PanelMain/>}/>}
                             <Route exact path="/" render={() => <HomePage categories={categories}/>}/>
                             <Route path="*" render={() => <NotFoundPage/>}/>

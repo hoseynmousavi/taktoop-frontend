@@ -172,7 +172,7 @@ class MySlider extends PureComponent
 
                 <div className="my-slider-container">
 
-                    <div ref={e => this.slider = e} className="my-slider-scroll" onMouseDown={this.dragMouseDown} onTouchStart={this.onTouchStart}>
+                    <div ref={e => this.slider = e} className={`my-slider-scroll ${showIndex === 0 ? "" : "dont-gesture"}`} onMouseDown={this.dragMouseDown} onTouchStart={this.onTouchStart}>
                         {
                             nodes.map((node, index) =>
                                 <div className="my-slider-node" key={showIndex === index ? "show" + index : "slider" + index} onMouseDown={this.onLinkDown} onMouseUp={this.onLinkUp} onClick={this.onLinkClick}>
