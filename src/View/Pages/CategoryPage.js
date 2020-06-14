@@ -86,30 +86,29 @@ class CategoryPage extends PureComponent
                                     </div>
                                 </div>
                             </a>
-                            {
-                                posts.length > 0 ?
-                                    <div className="post-items-container">
-                                        {
-                                            posts.map(post =>
-                                                <Link key={post._id} className="post-item-cont-link" to={`/post/${post._id}`}>
-                                                    <Material className="post-item-cont">
-                                                        <div className="post-item-cont-title">{post.title}</div>
-                                                        <img className="post-item-cont-pic" src={REST_URL + post.picture} alt={post.title}/>
-                                                        <div className="post-item-cont-text">
-                                                            <div className="post-item-cont-text-desc">{post.short_description}</div>
-                                                            <div className="post-item-cont-text-detail">
-                                                                <LikeSvg className="post-item-cont-text-detail-like"/>
-                                                                <div className="post-item-cont-text-detail-like-count">{post.likes_cout || "0"}</div>
-                                                            </div>
+                            <div className="post-items-container">
+                                {
+                                    posts.length > 0 ?
+                                        posts.map(post =>
+                                            <Link key={post._id} className="post-item-cont-link" to={`/post/${post._id}`}>
+                                                <Material className="post-item-cont">
+                                                    <div className="post-item-cont-title">{post.title}</div>
+                                                    <img className="post-item-cont-pic" src={REST_URL + post.picture} alt={post.title}/>
+                                                    <div className="post-item-cont-text">
+                                                        <div className="post-item-cont-text-desc">{post.short_description}</div>
+                                                        <div className="post-item-cont-text-detail">
+                                                            <LikeSvg className="post-item-cont-text-detail-like"/>
+                                                            <div className="post-item-cont-text-detail-like-count">{post.likes_cout || "0"}</div>
                                                         </div>
-                                                    </Material>
-                                                </Link>,
-                                            )
-                                        }
-                                    </div>
-                                    :
-                                    !isLoading && <div className="loading-cont">پستی یافت نشد!</div>
-                            }
+                                                    </div>
+                                                </Material>
+                                            </Link>,
+                                        )
+                                        :
+                                        !isLoading && <div className="loading-cont">پستی یافت نشد!</div>
+                                }
+                            </div>
+
                             <div className="loading-cont">{isLoading && <ClipLoader color="var(--primary-color)" size={20}/>}</div>
                         </React.Fragment>
                         :
