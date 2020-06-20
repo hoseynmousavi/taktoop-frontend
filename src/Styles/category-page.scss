@@ -25,6 +25,14 @@
   vertical-align: top;
   border-bottom: 1px solid var(--border-color);
 
+  &.full-wide {
+    width: 100%;
+
+    &:nth-child(odd) {
+      border-left: none;
+    }
+  }
+
   &:nth-child(odd) {
     border-left: 1px solid var(--border-color);
   }

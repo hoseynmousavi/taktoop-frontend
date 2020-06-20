@@ -50,8 +50,9 @@ class CategoryPage extends PureComponent
             {
                 this.setState({...this.state, isLoading: true}, () =>
                 {
+                    const {category} = this.props
                     this.activeScrollHeight = scrollHeight
-                    api.get("post", `?limit=10&page=${this.page}`).then((data) =>
+                    api.get("post", `?category_id=${category._id}&limit=10&page=${this.page}`).then((data) =>
                     {
                         this.page += 1
                         this.setState({...this.state, isLoading: false, posts: [...posts, ...data]})

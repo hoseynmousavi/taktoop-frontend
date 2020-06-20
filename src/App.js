@@ -8,6 +8,7 @@ import api, {REST_URL} from "./Functions/api"
 const PanelMain = lazy(() => import("./View/Panel/PanelMain"))
 const CategoryPage = lazy(() => import("./View/Pages/CategoryPage"))
 const HomePage = lazy(() => import("./View/Pages/HomePage"))
+const PostPage = lazy(() => import("./View/Pages/PostPage"))
 const SignupPage = lazy(() => import("./View/Pages/SignupPage"))
 const NotFoundPage = lazy(() => import("./View/Pages/NotFoundPage"))
 
@@ -82,6 +83,7 @@ class App extends PureComponent
                         <Switch>
                             <Route path="/sign-up" render={() => <SignupPage setUser={this.setUser}/>}/>
                             <Route path="/category/:id" render={route => <CategoryPage key={route.match.params.id} category={categories[route.match.params.id]} parent={categories[categories[route.match.params.id]?.parent_id]}/>}/>
+                            <Route path="/post/:id" render={route => <PostPage postId={route.match.params.id}/>}/>
                             {user?.role === "admin" && <Route path="/panel" render={() => <PanelMain/>}/>}
                             <Route exact path="/" render={() => <HomePage categories={categories}/>}/>
                             <Route path="*" render={() => <NotFoundPage/>}/>
