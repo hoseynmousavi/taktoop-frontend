@@ -559,3 +559,40 @@
     padding: 10px 0;
   }
 }
+
+.panel-checkbox {
+  display: block !important;
+  margin-top: 15px;
+}
+
+.panel-checkbox-pre-cont {
+  display: flex;
+  justify-content: space-between;
+}
+
+.panel-checkbox-pre {
+
+}
+
+.panel-checkbox-pre-inputs {
+  text-align: left;
+}
+
+.panel-checkbox-pre-date {
+  vertical-align: top;
+  border-bottom: 1px solid var(--border-color);
+  margin-right: 10px;
+  text-align: center;
+  padding: 3px;
+  direction: ltr;
+  width: 95px;
+}
+
+.panel-checkbox-pre-time {
+  vertical-align: top;
+  border-bottom: 1px solid var(--border-color);
+  text-align: center;
+  padding: 3px;
+  direction: ltr;
+  width: 90px;
+}
