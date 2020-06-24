@@ -1,18 +1,17 @@
 :root {
-    --transparent-third: rgba(58, 175, 169, 0.1);
-    --transparent-second: rgba(58, 175, 169, 0.4);
-    --transparent-primary: rgba(58, 175, 169, 0.6);
-    --third-color: #75C7C3;
-    --primary-color: #3AAFA9;
-    --secondary-color: #2B7A78;
-    --secondary-color-hover: #2a6f6d;
-    --pavilion-background-color: #FFCC44;
+    --transparent-third: rgba(165, 121, 37, 0.1);
+    --transparent-second: rgba(165, 121, 37, 0.4);
+    --transparent-primary: rgba(165, 121, 37, 0.6);
+    --third-color: #d7bc85;
+    --primary-color: #D2B06D;
+    --secondary-color: #a57925;
     --light-color: #DEF2F1;
     --success-color: #28BF49;
     --dark-color: #303030;
     --very-light-color: #fafafa;
-    --background-color: #FFFFFF;
-    --login-page-background-color: #DEF2F1;
+    --header-background-color: #2f2d2d;
+    --background-color: #000000;
+    --login-page-background-color: #dcc79b;
     --menu-color: #f6f3f3;
     --border-color: #CDCDCD;
     --text-light-color: #878787;

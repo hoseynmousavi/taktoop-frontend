@@ -66,7 +66,7 @@ class AddDescription extends PureComponent
                     <div className="sign-up-page-title">{update ? "ویرایش" : "ساخت"} توضیحات</div>
                     <MaterialInput className={`sign-up-page-area add-desc ${isBold ? "bold" : ""}`}
                                    isTextArea={true}
-                                   backgroundColor="var(--background-color)"
+                                   backgroundColor="var(--header-background-color)"
                                    name="description"
                                    label={<span>توضیحات <span className="sign-up-page-field-star">*</span></span>}
                                    getValue={this.setValue}

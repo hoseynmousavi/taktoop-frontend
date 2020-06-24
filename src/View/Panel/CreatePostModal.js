@@ -253,7 +253,7 @@ class CreatePostModal extends PureComponent
                     <div className="sign-up-page modal" onClick={e => e.stopPropagation()}>
                         <div className="sign-up-page-title">{update ? "ویرایش" : "ساخت"} پست</div>
                         <MaterialInput className="sign-up-page-field"
-                                       backgroundColor="var(--background-color)"
+                                       backgroundColor="var(--header-background-color)"
                                        name="title"
                                        maxLength={80}
                                        label={<span>عنوان <span className="sign-up-page-field-star">*</span></span>}
@@ -263,7 +263,7 @@ class CreatePostModal extends PureComponent
                         />
                         <MaterialInput className="sign-up-page-area"
                                        isTextArea={true}
-                                       backgroundColor="var(--background-color)"
+                                       backgroundColor="var(--header-background-color)"
                                        name="short_description"
                                        maxLength={250}
                                        label={<span>توضیحات کوتاه <span className="sign-up-page-field-star">*</span></span>}

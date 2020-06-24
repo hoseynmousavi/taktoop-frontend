@@ -83,7 +83,7 @@ class App extends PureComponent
                         <Switch>
                             <Route path="/sign-up" render={() => <SignupPage setUser={this.setUser}/>}/>
                             <Route path="/category/:id" render={route => <CategoryPage key={route.match.params.id} category={categories[route.match.params.id]} parent={categories[categories[route.match.params.id]?.parent_id]}/>}/>
-                            <Route path="/post/:id" render={route => <PostPage postId={route.match.params.id}/>}/>
+                            <Route path="/post/:title" render={route => <PostPage title={route.match.params.title}/>}/>
                             {user?.role === "admin" && <Route path="/panel" render={() => <PanelMain/>}/>}
                             <Route exact path="/" render={() => <HomePage categories={categories}/>}/>
                             <Route path="*" render={() => <NotFoundPage/>}/>

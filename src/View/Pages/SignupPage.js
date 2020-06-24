@@ -116,7 +116,7 @@ class SignupPage extends PureComponent
                 <div className="sign-up-page">
                     <div className="sign-up-page-title">ثبت نام</div>
                     <MaterialInput className="sign-up-page-field"
-                                   backgroundColor="var(--background-color)"
+                                   backgroundColor="var(--header-background-color)"
                                    name="name"
                                    label={<span>نام و نام خانوادگی <span className="sign-up-page-field-star">*</span></span>}
                                    getValue={this.setName}
@@ -125,7 +125,7 @@ class SignupPage extends PureComponent
                     />
 
                     <MaterialInput className="sign-up-page-field"
-                                   backgroundColor="var(--background-color)"
+                                   backgroundColor="var(--header-background-color)"
                                    name="email"
                                    label={<span>ایمیل <span className="sign-up-page-field-star">*</span></span>}
                                    getValue={this.setEmail}
@@ -136,7 +136,7 @@ class SignupPage extends PureComponent
                     <div className={`sign-up-page-field-err ${emailErrText ? "show" : ""}`}>{emailErrText}</div>
 
                     <MaterialInput className="sign-up-page-field"
-                                   backgroundColor="var(--background-color)"
+                                   backgroundColor="var(--header-background-color)"
                                    type="password"
                                    name="password"
                                    label={<span>رمز عبور <span className="sign-up-page-field-star">*</span></span>}

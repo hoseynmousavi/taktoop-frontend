@@ -7,7 +7,7 @@
   left: 0;
   z-index: 3;
   height: 120px;
-  background-color: var(--background-color);
+  background-color: var(--header-background-color);
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
 
   @media screen and (max-width: 480px) {
@@ -282,7 +282,7 @@
 .header-categories-dialog-child-item {
   display: block;
   padding: 10px 5px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--secondary-color);
   cursor: pointer;
   transition: all linear 0.2s;
 

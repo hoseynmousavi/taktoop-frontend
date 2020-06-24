@@ -131,6 +131,8 @@ class Posts extends PureComponent
                                                     <div className="panel-posts-item-title">{post.title}</div>
                                                     <div className="panel-posts-item-cat">{categories[post.category_id]?.title}</div>
                                                     <div className="panel-posts-item-desc">{post.short_description}</div>
+                                                    {post.is_bold && <div className="panel-posts-item-bold">پست بولد</div>}
+                                                    {post.is_predict && <div className="panel-posts-item-bold">پست پیشبینی: {new Date(post.is_predict).toLocaleString("fa-ir")}</div>}
                                                 </Link>,
                                             )
                                         }

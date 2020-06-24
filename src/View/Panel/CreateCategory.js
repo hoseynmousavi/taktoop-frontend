@@ -149,7 +149,7 @@ class CreateCategory extends PureComponent
                     <div className="sign-up-page modal" onClick={e => e.stopPropagation()}>
                         <div className="sign-up-page-title">{category ? "ویرایش" : "ساخت"} دسته‌بندی</div>
                         <MaterialInput className="sign-up-page-field"
-                                       backgroundColor="var(--background-color)"
+                                       backgroundColor="var(--header-background-color)"
                                        name="title"
                                        label={<span>عنوان <span className="sign-up-page-field-star">*</span></span>}
                                        getValue={this.setValue}
@@ -157,7 +157,7 @@ class CreateCategory extends PureComponent
                                        defaultValue={category?.title}
                         />
                         <MaterialInput className="sign-up-page-field"
-                                       backgroundColor="var(--background-color)"
+                                       backgroundColor="var(--header-background-color)"
                                        name="description"
                                        label="توضیحات"
                                        getValue={this.setValue}
@@ -186,7 +186,7 @@ class CreateCategory extends PureComponent
                                     </Material>
                                 </label>
                                 <MaterialInput className="sign-up-page-field"
-                                               backgroundColor="var(--background-color)"
+                                               backgroundColor="var(--header-background-color)"
                                                name="address"
                                                label="آدرس اسلایدر"
                                                getValue={this.setValue}

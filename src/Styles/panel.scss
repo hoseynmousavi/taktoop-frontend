@@ -27,10 +27,11 @@
   right: 5%;
   top: 130px;
   width: 300px;
-  border: 1px solid var(--dark-color);
+  border: 1px solid var(--primary-color);
   display: inline-block;
   vertical-align: top;
   border-radius: 5px;
+  overflow: hidden;
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
 
   @media screen and (max-width: 480px) {
@@ -103,7 +104,7 @@
 .panel-categories-cont {
   border-radius: 5px;
   overflow: hidden;
-  background-color: var(--background-color);
+  background-color: var(--header-background-color);
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
   margin-bottom: 80px;
 }
@@ -114,6 +115,7 @@
   font-weight: bold;
   font-size: $title-font-size;
   padding: 12px 0;
+  border-radius: 5px;
 }
 
 .panel-table-row-cont {
@@ -150,7 +152,6 @@
 
   &.title {
     background-color: var(--dark-color) !important;
-    color: var(--background-color);
     cursor: default;
 
     &:hover {
@@ -191,6 +192,7 @@
   color: var(--error-color);
   padding: 12px;
   font-size: $regular-font-size;
+  text-align: center;
 }
 
 .panel-add-item {
@@ -233,7 +235,7 @@
   top: 10px;
   position: absolute;
   background-color: rgba(0, 0, 0, 0.4);
-  color: var(--background-color);
+  color: var(--border-color);
   padding: 5px;
   border-radius: 5px;
   font-size: $regular-font-size;
@@ -363,7 +365,7 @@
   flex-grow: 1;
   margin: 10px;
   font-size: $regular-font-size;
-  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--primary-color);
   border-radius: 5px;
   overflow: hidden;
   cursor: pointer;
@@ -400,6 +402,12 @@
   padding: 10px;
 }
 
+.panel-posts-item-bold {
+  color: var(--primary-color);
+  font-weight: bold;
+  padding: 10px;
+}
+
 .panel-post-description-cont {
   padding: 15px;
 }
@@ -410,6 +418,10 @@
   margin: 10px 0;
   padding: 15px 10px 15px 152px;
   position: relative;
+
+  &.regular {
+    padding: 15px 10px;
+  }
 }
 
 .panel-post-description-delete {
@@ -520,6 +532,7 @@
   text-align: justify;
   text-align-last: right;
   white-space: pre-wrap;
+  color: var(--dark-color);
 
   &.bold {
     font-weight: bold;
@@ -536,6 +549,7 @@
 
 .panel-post-add-desc-menu {
   background-color: var(--menu-color);
+  color: var(--background-color);
   font-size: $regular-font-size;
   font-weight: bold;
   width: 100px;
@@ -595,4 +609,13 @@
   padding: 3px;
   direction: ltr;
   width: 90px;
+}
+
+.post-page-cont {
+  text-align: center;
+  padding: 10px 15%;
+
+  @media screen and (max-width: 480px) {
+    padding: 10px 5%;
+  }
 }

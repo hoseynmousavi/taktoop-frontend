@@ -65,14 +65,14 @@ class LoginModal extends PureComponent
                 <div className="sign-up-page modal" onClick={e => e.stopPropagation()}>
                     <div className="sign-up-page-title">ورود</div>
                     <MaterialInput className="sign-up-page-field"
-                                   backgroundColor="var(--background-color)"
+                                   backgroundColor="var(--header-background-color)"
                                    name="email"
                                    label="ایمیل"
                                    getValue={this.setValue}
                                    onKeyDown={this.submitOnEnter}
                     />
                     <MaterialInput className="sign-up-page-field"
-                                   backgroundColor="var(--background-color)"
+                                   backgroundColor="var(--header-background-color)"
                                    type="password"
                                    name="password"
                                    label="رمز عبور"

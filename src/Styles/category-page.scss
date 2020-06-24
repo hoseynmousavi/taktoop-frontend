@@ -13,7 +13,7 @@
 }
 
 .post-items-container {
-  background-color: var(--background-color);
+  background-color: var(--header-background-color);
   border-radius: 5px;
   overflow: hidden;
   margin-top: 20px;
@@ -30,6 +30,10 @@
 
     &:nth-child(odd) {
       border-left: none;
+    }
+
+    &:last-child {
+      border-bottom: none;
     }
   }
 
@@ -48,7 +52,7 @@
   transition: all linear 0.2s;
 
   &:hover {
-    background-color: var(--menu-color);
+    background-color: var(--transparent-third);
 
     .post-item-cont-pic {
       border-color: var(--primary-color);

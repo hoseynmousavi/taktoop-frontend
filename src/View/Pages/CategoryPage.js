@@ -91,7 +91,7 @@ class CategoryPage extends PureComponent
                                 {
                                     posts.length > 0 ?
                                         posts.map(post =>
-                                            <Link key={post._id} className="post-item-cont-link" to={`/post/${post._id}`}>
+                                            <Link key={post._id} className="post-item-cont-link" to={`/post/${post.title}`}>
                                                 <Material className="post-item-cont">
                                                     <div className="post-item-cont-title">{post.title}</div>
                                                     <img className="post-item-cont-pic" src={REST_URL + post.picture} alt={post.title}/>

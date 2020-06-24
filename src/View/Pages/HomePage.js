@@ -54,7 +54,7 @@ class HomePage extends PureComponent
                     <div className="home-page-bolds-items hide-scroll dont-gesture">
                         {
                             boldPosts.map(post =>
-                                <Link key={"bold" + post._id} className="home-page-bolds-link" to={`/post/${post._id}`}>
+                                <Link key={"bold" + post._id} className="home-page-bolds-link" to={`/post/${post.title}`}>
                                     <Material className="home-page-bolds-cont">
                                         <img className="home-page-bolds-img" src={REST_URL + post.picture} alt={post.title}/>
                                         <div className="home-page-bolds-text">{post.title}</div>
@@ -81,7 +81,7 @@ class HomePage extends PureComponent
                         <div className="home-page-main-posts">
                             {
                                 boldPosts.map(post =>
-                                    <Link key={"new" + post._id} className="post-item-cont-link full-wide" to={`/post/${post._id}`}>
+                                    <Link key={"new" + post._id} className="post-item-cont-link full-wide" to={`/post/${post.title}`}>
                                         <Material className="post-item-cont">
                                             <div className="post-item-cont-title">{post.title}</div>
                                             <img className="post-item-cont-pic" src={REST_URL + post.picture} alt={post.title}/>
@@ -106,7 +106,7 @@ class HomePage extends PureComponent
                             </div>
                             {
                                 boldPosts.map(post =>
-                                    <Link key={"predict" + post._id} className="home-page-side-post" to={`/post/${post._id}`}>
+                                    <Link key={"predict" + post._id} className="home-page-side-post" to={`/post/${post.title}`}>
                                         <div className="home-page-side-post-title">{post.title}</div>
                                         <div className="home-page-side-post-desc">{post.short_description}</div>
                                     </Link>,
@@ -120,7 +120,7 @@ class HomePage extends PureComponent
                             </div>
                             {
                                 boldPosts.map(post =>
-                                    <Link key={"high" + post._id} className="home-page-side-post" to={`/post/${post._id}`}>
+                                    <Link key={"high" + post._id} className="home-page-side-post" to={`/post/${post.title}`}>
                                         <div className="home-page-side-post-title">{post.title}</div>
                                         <div className="home-page-side-post-desc">{post.short_description}</div>
                                     </Link>,

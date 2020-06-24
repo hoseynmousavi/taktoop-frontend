@@ -48,7 +48,7 @@
 }
 
 .home-page-bolds {
-  background: var(--background-color);
+  background: var(--header-background-color);
   padding: 15px;
   border-radius: 5px;
   margin: 30px 0 20px 0;
@@ -153,7 +153,7 @@
 }
 
 .home-page-main-posts {
-  background-color: var(--background-color);
+  background-color: var(--header-background-color);
 }
 
 .home-page-main-title-item {
@@ -165,7 +165,7 @@
 
   &.selected {
     border-top: 2px solid var(--primary-color);
-    background-color: var(--background-color);
+    background-color: var(--header-background-color);
   }
 }
 
@@ -184,7 +184,7 @@
 }
 
 .home-page-side-col-section {
-  background-color: var(--background-color);
+  background-color: var(--header-background-color);
 
   @media screen and (max-width: 480px) {
     margin-top: 20px;
