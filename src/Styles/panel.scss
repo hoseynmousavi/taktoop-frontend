@@ -186,6 +186,10 @@
   width: 25%;
   padding: 0 10px;
   text-align: center;
+
+  &.grow {
+    flex-grow: 1;
+  }
 }
 
 .panel-table-err-loading {
@@ -290,6 +294,11 @@
   justify-content: center;
   color: var(--secondary-color);
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+
+  &.clip-loader {
+    padding-top: 3px;
+    height: 72px;
+  }
 }
 
 .panel-remove-btn {
@@ -327,6 +336,10 @@
   &.delete {
     fill: var(--error-color);
     right: 40px;
+  }
+
+  &.delete-right {
+    fill: var(--error-color);
   }
 
 }

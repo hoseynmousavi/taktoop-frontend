@@ -4,6 +4,7 @@ import {NotificationContainer} from "react-notifications"
 import Header from "./View/Components/Header"
 import LoginModal from "./View/Components/LoginModal"
 import api, {REST_URL} from "./Functions/api"
+import ShowLink from "./View/Components/ShowLink"
 
 const PanelMain = lazy(() => import("./View/Panel/PanelMain"))
 const CategoryPage = lazy(() => import("./View/Pages/CategoryPage"))
@@ -90,6 +91,8 @@ class App extends PureComponent
                         </Switch>
                     </Suspense>
                 </main>
+
+                <ShowLink />
 
                 <NotificationContainer/>
 

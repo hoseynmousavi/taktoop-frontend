@@ -26,7 +26,7 @@ class HomePage extends PureComponent
 
     render()
     {
-        const {boldPostsLoading, boldPosts} = this.state
+        const {boldPosts} = this.state
         const {categories} = this.props
         const sliders = Object.values(categories).filter(item => !item.parent_id)
         return (

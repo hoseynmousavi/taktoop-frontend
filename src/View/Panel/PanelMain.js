@@ -3,6 +3,7 @@ import {Route, Switch} from "react-router-dom"
 import PanelSidebar from "./PanelSidebar"
 import Categories from "./Categories"
 import Posts from "./Posts"
+import Links from "./Links"
 
 class PanelMain extends PureComponent
 {
@@ -15,6 +16,7 @@ class PanelMain extends PureComponent
                     <Switch>
                         <Route path="/panel/categories" render={() => <Categories/>}/>
                         <Route path="/panel/posts" render={() => <Posts/>}/>
+                        <Route path="/panel/links" render={() => <Links/>}/>
                         <Route path="*" render={() => <div className="panel-welcome">سلام ادمین</div>}/>
                     </Switch>
                 </div>

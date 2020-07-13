@@ -55,3 +55,15 @@
     transform: translateY(0px);
   }
 }
+
+@keyframes title {
+  0% {
+    transform: translateX(50%) scale(1);
+  }
+  50% {
+    transform: translateX(50%) scale(1.03);
+  }
+  100% {
+    transform: translateX(50%) scale(1);
+  }
+}

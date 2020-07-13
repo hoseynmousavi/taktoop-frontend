@@ -65,7 +65,7 @@ input[type=number]::-webkit-outer-spin-button {
 
   @media screen and (max-width: 480px) {
     padding-top: 80px;
-    min-height: calc(100vh - 80px);
+    padding-bottom: 40px;
   }
 }
 
@@ -109,4 +109,44 @@ input[type=number]::-webkit-outer-spin-button {
 
 .hide-scroll::-webkit-scrollbar-thumb {
   background-color: transparent;
+}
+
+.show-link {
+  display: none;
+
+  @media screen and (max-width: 480px) {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--transparent-second);
+    text-align: center;
+    font-size: $regular-font-size;
+    font-weight: bold;
+  }
+
+  @media screen and (min-width: 1000px) {
+    display: block;
+    position: fixed;
+    top: 20px;
+    right: 50%;
+    transform: translateX(50%);
+    color: var(--primary-color);
+    background-color: var(--transparent-second);
+    padding: 10px;
+    border-radius: 25px;
+    z-index: 3;
+    font-size: $regular-font-size;
+    font-weight: bold;
+    animation: title ease 1s infinite;
+    transition: all linear 0.2s;
+
+    &:hover {
+      box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);
+    }
+  }
 }

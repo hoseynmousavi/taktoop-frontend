@@ -44,7 +44,7 @@ class LoginModal extends PureComponent
                     })
                     .catch(e =>
                     {
-                        if (e?.response.status === 404) this.setState({...this.state, serverError: false, loading: false}, () => NotificationManager.error("کاربری با اطلاعات وارد شده یافت نشد!"))
+                        if (e?.response.status === 404 || e?.response.status === 401) this.setState({...this.state, serverError: false, loading: false}, () => NotificationManager.error("کاربری با اطلاعات وارد شده یافت نشد!"))
                         else this.setState({...this.state, serverError: true, loading: false})
                     })
             })
