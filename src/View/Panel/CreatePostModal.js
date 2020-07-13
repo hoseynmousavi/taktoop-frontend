@@ -299,12 +299,12 @@ class CreatePostModal extends PureComponent
                             </Material>
                         </label>
 
-                        <SeyedCheckbox className="panel-checkbox" label="بولد" defaultValue={update.is_bold} onChange={this.changeBold}/>
+                        <SeyedCheckbox className="panel-checkbox" label="بولد" defaultValue={update?.is_bold} onChange={this.changeBold}/>
 
                         <div className="panel-checkbox-pre-cont">
-                            <SeyedCheckbox className="panel-checkbox-pre" label="پیشبینی" defaultValue={update.is_predict} onChange={this.changePredict}/>
+                            <SeyedCheckbox className="panel-checkbox-pre" label="پیشبینی" defaultValue={update?.is_predict} onChange={this.changePredict}/>
                             {
-                                (is_predict || update.is_predict) &&
+                                (is_predict || update?.is_predict) &&
                                 <div className="panel-checkbox-pre-inputs">
                                     <input placeholder="19:30" ref={e => this.time = e} maxLength={5} className="panel-checkbox-pre-time"/>
                                     <input placeholder="1399/4/4" ref={e => this.date = e} maxLength={10} className="panel-checkbox-pre-date"/>
