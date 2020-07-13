@@ -267,7 +267,7 @@
   &.show {
     transform: translateX(-100%);
     opacity: 1;
-    height: 500px;
+    height: 400px;
     transition: all ease 0.2s, height ease 0s;
   }
 }
@@ -291,20 +291,24 @@
     background-color: var(--secondary-color);
     color: var(--primary-color);
   }
+
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
 .header-categories-dialog-img {
-  width: 650px;
+  width: 530px;
   height: 100%;
   object-fit: cover;
   align-self: center;
   margin: 0;
 
-  @media screen and (max-width: 1000px) {
-    width: 500px;
+  @media screen and (max-width: 900px) {
+    width: 450px;
   }
 
   @media screen and (max-width: 800px) {
-    width: 400px;
+    width: 350px;
   }
 }
