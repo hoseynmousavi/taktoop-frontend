@@ -549,6 +549,7 @@
 
   &.bold {
     font-weight: bold;
+    font-size: $title-font-size;
     color: var(--secondary-color);
   }
 }

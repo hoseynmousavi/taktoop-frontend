@@ -6,6 +6,7 @@ import SmoothArrowSvg from "../../Media/Svgs/SmoothArrowSvg"
 import {REST_URL} from "../../Functions/api"
 import TickSvg from "../../Media/Svgs/TickSvg"
 import ImageShow from "../Components/ImageShow"
+import formatDetection from "../../Helpers/formatDetection"
 
 class PostDescription extends PureComponent
 {
@@ -13,6 +14,12 @@ class PostDescription extends PureComponent
     {
         super(props)
         this.state = {}
+    }
+
+    componentDidMount()
+    {
+        const {item} = this.props
+        if (item.type === "description" && this.desc) formatDetection(this.desc)
     }
 
     setOrderUp = () =>
@@ -69,7 +76,7 @@ class PostDescription extends PureComponent
                 }
                 {
                     item.type === "description" ?
-                        <div className="panel-post-description-desc">{item.content}</div>
+                        <div className="panel-post-description-desc" ref={e => this.desc = e}>{item.content}</div>
                         :
                         item.type === "bold" ?
                             <div className="panel-post-description-desc bold">{item.content}</div>
