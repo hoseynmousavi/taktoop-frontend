@@ -79,7 +79,7 @@ class PostDescription extends PureComponent
                         <div className="panel-post-description-desc" ref={e => this.desc = e}>{item.content}</div>
                         :
                         item.type === "bold" ?
-                            <div className="panel-post-description-desc bold">{item.content}</div>
+                            <div className="panel-post-description-desc bold" ref={e => this.desc = e}>{item.content}</div>
                             :
                             item.type === "picture" ?
                                 <ImageShow className="panel-post-description-img-video" key={item.content} src={REST_URL + item.content} alt=""/>
