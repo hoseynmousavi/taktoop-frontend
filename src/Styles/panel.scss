@@ -116,6 +116,10 @@
   font-size: $title-font-size;
   padding: 12px 0;
   border-radius: 5px;
+
+  &.regular {
+    border-radius: 5px 5px 0 0;
+  }
 }
 
 .panel-table-row-cont {
@@ -192,6 +196,13 @@
   }
 }
 
+.panel-table-row-item-select {
+  color: var(--secondary-color);
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 .panel-table-err-loading {
   color: var(--error-color);
   padding: 12px;
@@ -215,6 +226,11 @@
   color: var(--background-color);
   border-radius: 50%;
   transition: all linear 0.2s;
+
+  &.like {
+    background-color: #634916;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+  }
 
   @media screen and (max-width: 480px) {
     bottom: calc(5% + 35px);
@@ -434,6 +450,8 @@
 
   &.regular {
     padding: 15px 10px;
+    margin: 0;
+    border-radius: 0;
   }
 }
 
@@ -633,5 +651,31 @@
 
   @media screen and (max-width: 480px) {
     padding: 10px 5%;
+  }
+}
+
+.post-page-content {
+  border-radius: 0 0 5px 5px;
+  overflow: hidden;
+}
+
+.post-like-btn {
+  width: 18px;
+  fill: var(--border-color);
+  transition: all linear 0.1s;
+
+  &.liked {
+    fill: var(--success-color);
+  }
+}
+
+.post-like-count {
+  color: var(--border-color);
+  margin-left: 5px;
+  font-size: $regular-font-size;
+  transition: all linear 0.1s;
+
+  &.liked {
+    color: var(--success-color);
   }
 }

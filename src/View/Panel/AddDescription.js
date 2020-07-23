@@ -18,6 +18,18 @@ class AddDescription extends PureComponent
         this[name] = value
     }
 
+    toggleAddDescription = () =>
+    {
+        const {toggleAddDescription} = this.props
+        const description = this.description?.trim()
+        if (description)
+        {
+            const confirm = window.confirm("اطلاعات وارد شده حذف میشوند، مطئمنید؟")
+            confirm && toggleAddDescription()
+        }
+        else toggleAddDescription()
+    }
+
     submit = () =>
     {
         const {update} = this.props
@@ -58,10 +70,10 @@ class AddDescription extends PureComponent
 
     render()
     {
-        const {toggleAddDescription, update, isBold} = this.props
+        const {update, isBold} = this.props
         const {loading} = this.state
         return (
-            <div className="sign-up-page-loading-cont" onClick={loading ? null : toggleAddDescription}>
+            <div className="sign-up-page-loading-cont" onClick={loading ? null : this.toggleAddDescription}>
                 <div className="sign-up-page modal" onClick={e => e.stopPropagation()}>
                     <div className="sign-up-page-title">{update ? "ویرایش" : "ساخت"} توضیحات</div>
                     <MaterialInput className={`sign-up-page-area add-desc ${isBold ? "bold" : ""}`}

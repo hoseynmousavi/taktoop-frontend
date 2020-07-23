@@ -4,6 +4,7 @@ import {ClipLoader} from "react-spinners"
 import Material from "../Components/Material"
 import {Link} from "react-router-dom"
 import LikeSvg from "../../Media/Svgs/LikeSvg"
+import {Helmet} from "react-helmet"
 
 class CategoryPage extends PureComponent
 {
@@ -78,6 +79,13 @@ class CategoryPage extends PureComponent
                 {
                     category ?
                         <React.Fragment>
+
+                            <Helmet>
+                                <title>تک توپ | {category.title}</title>
+                                <meta property="og:title" content={`تک توپ | ${category.title}`}/>
+                                <meta name="twitter:title" content={`تک توپ | ${category.title}`}/>
+                            </Helmet>
+
                             <a href={parent.address} className="home-page-slider-cont">
                                 <img className="home-page-slider-item" src={REST_URL + parent.slider_picture} alt={parent.title}/>
                                 <div className="home-page-slider-text">
@@ -99,7 +107,7 @@ class CategoryPage extends PureComponent
                                                         <div className="post-item-cont-text-desc">{post.short_description}</div>
                                                         <div className="post-item-cont-text-detail">
                                                             <LikeSvg className="post-item-cont-text-detail-like"/>
-                                                            <div className="post-item-cont-text-detail-like-count">{post.likes_cout || "0"}</div>
+                                                            <div className="post-item-cont-text-detail-like-count">{post.likes_count || "0"}</div>
                                                         </div>
                                                     </div>
                                                 </Material>

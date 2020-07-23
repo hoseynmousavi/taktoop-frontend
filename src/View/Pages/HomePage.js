@@ -4,6 +4,7 @@ import MySlider from "../Components/MySlider"
 import {Link} from "react-router-dom"
 import Material from "../Components/Material"
 import LikeSvg from "../../Media/Svgs/LikeSvg"
+import {Helmet} from "react-helmet"
 
 class HomePage extends PureComponent
 {
@@ -31,6 +32,13 @@ class HomePage extends PureComponent
         const sliders = Object.values(categories).filter(item => !item.parent_id)
         return (
             <div className="home-page-cont">
+
+                <Helmet>
+                    <title>تک توپ</title>
+                    <meta property="og:title" content="تک توپ"/>
+                    <meta name="twitter:title" content="تک توپ"/>
+                </Helmet>
+
                 {
                     sliders.length > 0 &&
                     <MySlider dots={true}
@@ -89,7 +97,7 @@ class HomePage extends PureComponent
                                                 <div className="post-item-cont-text-desc">{post.short_description}</div>
                                                 <div className="post-item-cont-text-detail">
                                                     <LikeSvg className="post-item-cont-text-detail-like"/>
-                                                    <div className="post-item-cont-text-detail-like-count">{post.likes_cout || "0"}</div>
+                                                    <div className="post-item-cont-text-detail-like-count">{post.likes_count || "0"}</div>
                                                 </div>
                                             </div>
                                         </Material>

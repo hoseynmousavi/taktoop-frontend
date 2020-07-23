@@ -1,14 +1,12 @@
 import React, {PureComponent} from "react"
+import {Helmet} from "react-helmet"
 import MaterialInput from "../Components/MaterialInput"
 import Material from "../Components/Material"
 import Constant from "../../Constant/Constant"
 import api from "../../Functions/api"
-import {MoonLoader} from "react-spinners"
 import {NotificationManager} from "react-notifications"
-import {Redirect} from "react-router-dom"
-import {Helmet} from "react-helmet"
 
-class SignupPage extends PureComponent
+class ProfilePage extends PureComponent
 {
     constructor(props)
     {
@@ -25,12 +23,15 @@ class SignupPage extends PureComponent
             passwordErrText: "",
             serverError: false,
         }
-        this.emailValid = false
+        this.emailValid = true
     }
 
     componentDidMount()
     {
         window.scroll({top: 0})
+
+        const {user} = this.props
+        this.setState({name: user.name, email: user.email})
     }
 
     setName = e =>
@@ -59,7 +60,8 @@ class SignupPage extends PureComponent
             api.post("user/email-check", {email: value.trim()})
                 .then(result =>
                 {
-                    if (result.count === 0) this.setState({...this.state, serverError: false}, () => this.emailValid = true)
+                    const {user} = this.props
+                    if (result.count === 0 || user.email === value.trim()) this.setState({...this.state, serverError: false}, () => this.emailValid = true)
                     else this.setState({...this.state, serverError: false, emailErr: true, emailErrText: "ایمیل وارد شده تکراری است!"})
                 })
                 .catch(() => this.setState({...this.state, serverError: true}))
@@ -82,22 +84,22 @@ class SignupPage extends PureComponent
         if (value.length < 8) this.setState({...this.state, passwordErr: true, passwordErrText: "رمز عبور باید حداقل 8 کاراکتر باشد!"})
     }
 
-    submitOnEnter = e => e.keyCode === 13 && this.submit()
-
     submit = () =>
     {
         const {name, email, password} = this.state
-        if (password.length >= 8 && name.trim().length > 0 && this.emailValid)
+        if (((password && password.length >= 8) || !password) && name.trim().length > 0 && this.emailValid)
         {
             this.setState({...this.state, loading: true}, () =>
             {
-                api.post("user/sign-up", {name: name.trim(), email: email.trim(), password})
+                let form = {name: name.trim(), email: email.trim()}
+                if (password) form.password = password
+                api.post("user/sign-up", form)
                     .then(user =>
                     {
                         const {setUser} = this.props
                         setUser(user)
-                        NotificationManager.success("ثبت نام با موفقیت انجام شد!")
-                        this.setState({...this.state, redirect: true})
+                        NotificationManager.success("ویرایش با موفقیت انجام شد!")
+                        this.setState({...this.state, loading: false})
                     })
                     .catch(() => this.setState({...this.state, serverError: true, loading: false}))
             })
@@ -112,29 +114,26 @@ class SignupPage extends PureComponent
 
     render()
     {
-        const {nameErr, emailErr, passwordErr, emailErrText, passwordErrText, loading, redirect, serverError} = this.state
+        const {loading, nameErr, emailErrText, emailErr, passwordErr, passwordErrText, serverError} = this.state || {}
+        const {user} = this.props
         return (
-            <div className="sign-up-page-cont">
+            <div className="profile-page-cont">
 
                 <Helmet>
-                    <title>تک توپ | ثبت نام</title>
-                    <meta property="og:title" content="تک توپ | ثبت نام"/>
-                    <meta name="twitter:title" content="تک توپ | ثبت نام"/>
+                    <title>تک توپ | پروفایل</title>
+                    <meta property="og:title" content="تک توپ | پروفایل"/>
+                    <meta name="twitter:title" content="تک توپ | پروفایل"/>
                 </Helmet>
 
-                {redirect && <Redirect to="/"/>}
-
-                {loading && <div className="sign-up-page-loading-cont"><MoonLoader color="var(--secondary-color)" size={40}/></div>}
-
-                <div className="sign-up-page">
-                    <div className="sign-up-page-title">ثبت نام</div>
-                    <MaterialInput className="sign-up-page-field"
+                <div className="panel-table-title regular">پروفایل</div>
+                <div className="profile-content">
+                    <MaterialInput className="sign-up-page-field no-top"
                                    backgroundColor="var(--header-background-color)"
                                    name="name"
                                    label={<span>نام و نام خانوادگی <span className="sign-up-page-field-star">*</span></span>}
                                    getValue={this.setName}
                                    borderColor={nameErr && "var(--error-color)"}
-                                   onKeyDown={this.submitOnEnter}
+                                   defaultValue={user.name}
                     />
 
                     <MaterialInput className="sign-up-page-field"
@@ -144,7 +143,7 @@ class SignupPage extends PureComponent
                                    getValue={this.setEmail}
                                    onBlur={this.onEmailBlur}
                                    borderColor={emailErr && "var(--error-color)"}
-                                   onKeyDown={this.submitOnEnter}
+                                   defaultValue={user.email}
                     />
                     <div className={`sign-up-page-field-err ${emailErrText ? "show" : ""}`}>{emailErrText}</div>
 
@@ -156,17 +155,17 @@ class SignupPage extends PureComponent
                                    getValue={this.setPassword}
                                    onBlur={this.onPasswordBlur}
                                    borderColor={passwordErr && "var(--error-color)"}
-                                   onKeyDown={this.submitOnEnter}
                     />
                     <div className={`sign-up-page-field-err ${passwordErrText ? "show" : ""}`}>{passwordErrText}</div>
 
                     <div className={`sign-up-page-field-err ${serverError ? "show" : ""}`}>خطا در برقراری ارتباط!</div>
 
-                    <Material className="sign-up-page-submit" onClick={this.submit}>ثبت</Material>
+                    <Material className={`login-modal-submit margin-top-only ${loading ? "loading" : ""}`} onClick={loading ? null : this.submit}>ثبت</Material>
                 </div>
+
             </div>
         )
     }
 }
 
-export default SignupPage
+export default ProfilePage

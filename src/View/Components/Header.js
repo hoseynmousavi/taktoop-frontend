@@ -174,15 +174,17 @@ class Header extends PureComponent
                     <div className="header-sidebar-container" style={{transform: "translateX(100%)"}} ref={e => this.sidebar = e}>
                         <Link to="/" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn margin-top">خانه</Material></Link>
                         {
-                            !user &&
-                            <React.Fragment>
-                                <NavLink to="/sign-up" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">ثبت نام</Material></NavLink>
-                                <Material className="header-sidebar-btn" onClick={this.toggleLoginModal}>ورود</Material>
-                            </React.Fragment>
+                            !user ?
+                                <React.Fragment>
+                                    <NavLink to="/sign-up" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">ثبت نام</Material></NavLink>
+                                    <Material className="header-sidebar-btn" onClick={this.toggleLoginModal}>ورود</Material>
+                                </React.Fragment>
+                                :
+                                <NavLink to="/profile" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">پروفایل</Material></NavLink>
                         }
                         <NavLink to="/about-us" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">درباره ما</Material></NavLink>
                         {
-                            user?.role === "admin" &&
+                            (user?.role === "admin" || user?.role === "system") &&
                             <NavLink to="/panel" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">پنل اعضا</Material></NavLink>
                         }
                         {
@@ -196,18 +198,20 @@ class Header extends PureComponent
                     <div className="header-section show-desktop">
                         <Link to="/"><h1 className="header-name">تک توپ</h1></Link>
                         {
-                            !user &&
-                            <React.Fragment>
-                                <NavLink activeClassName="header-right-section-link-active" to="/sign-up"><Material className="header-right-section-link">ثبت نام</Material></NavLink>
-                                <Material className="header-right-section-link" onClick={toggleLoginModal}>ورود</Material>
-                            </React.Fragment>
+                            !user ?
+                                <React.Fragment>
+                                    <NavLink activeClassName="header-right-section-link-active" to="/sign-up"><Material className="header-right-section-link">ثبت نام</Material></NavLink>
+                                    <Material className="header-right-section-link" onClick={toggleLoginModal}>ورود</Material>
+                                </React.Fragment>
+                                :
+                                <NavLink activeClassName="header-right-section-link-active" to="/profile"><Material className="header-right-section-link">پروفایل</Material></NavLink>
                         }
                         <NavLink activeClassName="header-right-section-link-active" to="/about-us"><Material className="header-right-section-link">درباره ما</Material></NavLink>
                         {user && <Material className="header-right-section-link logout" onClick={logout}>خروج</Material>}
                     </div>
                     <div className="header-section">
                         {
-                            user?.role === "admin" &&
+                            (user?.role === "admin" || user?.role === "system") &&
                             <NavLink activeClassName="header-right-section-link-active" className="show-desktop" to="/panel"><Material className="header-right-section-link">پنل اعضا</Material></NavLink>
                         }
                         <Link to="/"><img src={Logo} alt="تک توپ" className="header-logo"/></Link>

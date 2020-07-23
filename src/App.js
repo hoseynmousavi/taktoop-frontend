@@ -11,6 +11,7 @@ const CategoryPage = lazy(() => import("./View/Pages/CategoryPage"))
 const HomePage = lazy(() => import("./View/Pages/HomePage"))
 const PostPage = lazy(() => import("./View/Pages/PostPage"))
 const SignupPage = lazy(() => import("./View/Pages/SignupPage"))
+const ProfilePage = lazy(() => import("./View/Pages/ProfilePage"))
 const NotFoundPage = lazy(() => import("./View/Pages/NotFoundPage"))
 
 class App extends PureComponent
@@ -84,15 +85,16 @@ class App extends PureComponent
                         <Switch>
                             <Route path="/sign-up" render={() => <SignupPage setUser={this.setUser}/>}/>
                             <Route path="/category/:id" render={route => <CategoryPage key={route.match.params.id} category={categories[route.match.params.id]} parent={categories[categories[route.match.params.id]?.parent_id]}/>}/>
-                            <Route path="/post/:title" render={route => <PostPage title={route.match.params.title}/>}/>
-                            {user?.role === "admin" && <Route path="/panel" render={() => <PanelMain/>}/>}
+                            <Route path="/post/:title" render={route => <PostPage user={user} title={route.match.params.title}/>}/>
+                            {(user?.role === "system" || user?.role === "admin") && <Route path="/panel" render={() => <PanelMain user={user}/>}/>}
+                            {user && <Route path="/profile" render={() => <ProfilePage user={user}/>}/>}
                             <Route exact path="/" render={() => <HomePage categories={categories}/>}/>
                             <Route path="*" render={() => <NotFoundPage/>}/>
                         </Switch>
                     </Suspense>
                 </main>
 
-                <ShowLink />
+                <ShowLink/>
 
                 <NotificationContainer/>
 

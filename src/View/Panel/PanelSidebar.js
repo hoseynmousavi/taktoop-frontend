@@ -76,6 +76,7 @@ class PanelSidebar extends PureComponent
 
     render()
     {
+        const {user} = this.props
         return (
             <React.Fragment>
                 <div className="panel-side-bar" ref={e => this.sidebar = e} onTouchStart={this.onTouchStart} onTouchMove={this.onTouchMove} onTouchEnd={this.onTouchEnd}>
@@ -85,6 +86,10 @@ class PanelSidebar extends PureComponent
                     <NavLink onClick={this.hideSidebar} className="panel-side-bar-item-link" activeClassName="selected" to="/panel/posts"><Material backgroundColor="rgba(0,0,0,0.5)" className="panel-side-bar-item">پست‌ها</Material></NavLink>
                     <NavLink onClick={this.hideSidebar} className="panel-side-bar-item-link" activeClassName="selected" to="/panel/categories"><Material backgroundColor="rgba(0,0,0,0.5)" className="panel-side-bar-item">دسته‌بندی‌ها</Material></NavLink>
                     <NavLink onClick={this.hideSidebar} className="panel-side-bar-item-link" activeClassName="selected" to="/panel/links"><Material backgroundColor="rgba(0,0,0,0.5)" className="panel-side-bar-item">لینک‌ها</Material></NavLink>
+                    {
+                        user?.role === "system" &&
+                        <NavLink onClick={this.hideSidebar} className="panel-side-bar-item-link" activeClassName="selected" to="/panel/admins"><Material backgroundColor="rgba(0,0,0,0.5)" className="panel-side-bar-item">کاربران</Material></NavLink>
+                    }
                 </div>
                 <div className="panel-sidebar-back" style={{opacity: "0", height: "0"}} ref={e => this.sidebarBack = e} onClick={this.hideSidebar}/>
             </React.Fragment>
