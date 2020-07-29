@@ -109,7 +109,7 @@ class HomePage extends PureComponent
                     <div className="home-page-main-col">
                         <div className="home-page-main-title">
                             <div className="home-page-main-title-text">آخرین مطالب</div>
-                            <div className="home-page-main-title-tabs">
+                            <div className="home-page-main-title-tabs dont-gesture hide-scroll">
                                 <Material className={`home-page-main-title-item ${selectedTab === "news" ? "selected" : ""}`} onClick={() => this.selectCategory()}>تازه‌ها</Material>
                                 {
                                     sliders.map(item =>

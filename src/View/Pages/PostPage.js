@@ -52,6 +52,7 @@ class PostPage extends PureComponent
                     <title>تک توپ | {post.title}</title>
                     <meta property="og:title" content={`تک توپ | ${post.title}`}/>
                     <meta name="twitter:title" content={`تک توپ | ${post.title}`}/>
+                    {post.keywords && <meta name="keywords" content={`${post.keywords}`}/>}
                 </Helmet>
 
                 <div className="panel-table-title regular">{post.title}</div>

@@ -47,9 +47,10 @@ class CreatePostModal extends PureComponent
         const category_id = this.category_id?.trim()
         const picture = this.picture
         const is_bold = this.is_bold
+        const keywords = this.keywords
         const is_predict = this.state?.is_predict
 
-        if (title || short_description || (category_id && category_id !== "0") || picture || is_bold !== undefined || is_predict !== undefined)
+        if (title || short_description || (keywords || (update.keywords && !keywords)) || (category_id && category_id !== "0") || picture || is_bold !== undefined || is_predict !== undefined)
         {
             const form = new FormData()
             if (title)
@@ -71,6 +72,11 @@ class CreatePostModal extends PureComponent
                 }
             }
             if (category_id && category_id !== "0") form.append("category_id", category_id)
+            if (keywords || (update.keywords && !keywords))
+            {
+                if (keywords) form.append("keywords", keywords)
+                else form.append("keywords", "")
+            }
             if (is_bold !== undefined) form.append("is_bold", is_bold)
             if (is_predict !== undefined)
             {
@@ -153,6 +159,7 @@ class CreatePostModal extends PureComponent
         const category_id = this.category_id?.trim()
         const picture = this.picture
         const is_bold = this.is_bold
+        const keywords = this.keywords
         const is_predict = this.state?.is_predict
 
         if (title && title.length >= 5 && short_description && short_description.length >= 10 && category_id && category_id !== "0" && picture)
@@ -161,6 +168,7 @@ class CreatePostModal extends PureComponent
             form.append("title", title)
             form.append("short_description", short_description)
             form.append("category_id", category_id)
+            if (keywords) form.append("keywords", keywords)
             is_bold && form.append("is_bold", is_bold)
             if (is_predict)
             {
@@ -249,7 +257,7 @@ class CreatePostModal extends PureComponent
                         <div className="panel-upload-percent">{loadingPercent} %</div>
                     </div>
                 }
-                <div className="sign-up-page-loading-cont" onClick={loading ? null : toggleCreateModal}>
+                <div className="sign-up-page-loading-cont vertical-wide" onClick={loading ? null : toggleCreateModal}>
                     <div className="sign-up-page modal" onClick={e => e.stopPropagation()}>
                         <div className="sign-up-page-title">{update ? "ویرایش" : "ساخت"} پست</div>
                         <MaterialInput className="sign-up-page-field"
@@ -279,6 +287,16 @@ class CreatePostModal extends PureComponent
                                 )
                             }
                         </select>
+
+                        <MaterialInput className="sign-up-page-field"
+                                       backgroundColor="var(--header-background-color)"
+                                       name="keywords"
+                                       maxLength={80}
+                                       label="کلمات کلیدی"
+                                       getValue={this.setValue}
+                                       onKeyDown={this.submitOnEnter}
+                                       defaultValue={update?.keywords}
+                        />
 
                         <label className="panel-image-upload">
                             <Material className="panel-image-upload-material">

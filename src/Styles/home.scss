@@ -142,6 +142,7 @@
   font-weight: bold;
   font-size: $title-font-size;
   padding: 15px;
+  white-space: nowrap;
 
   &.side {
     color: var(--secondary-color);
@@ -149,7 +150,10 @@
 }
 
 .home-page-main-title-tabs {
-
+  @media screen and (max-width: 480px) {
+    white-space: nowrap;
+    overflow: auto;
+  }
 }
 
 .home-page-main-posts {
