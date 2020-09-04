@@ -49,9 +49,9 @@ class PostPage extends PureComponent
             <div className="post-page-cont">
 
                 <Helmet>
-                    <title>تک توپ | {post.title}</title>
-                    <meta property="og:title" content={`تک توپ | ${post.title}`}/>
-                    <meta name="twitter:title" content={`تک توپ | ${post.title}`}/>
+                    <title>مجله آنالیز فوتبال | {post.title}</title>
+                    <meta property="og:title" content={`مجله آنالیز فوتبال | ${post.title}`}/>
+                    <meta name="twitter:title" content={`مجله آنالیز فوتبال | ${post.title}`}/>
                     {post.keywords && <meta name="keywords" content={`${post.keywords}`}/>}
                 </Helmet>
 

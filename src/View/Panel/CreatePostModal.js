@@ -291,7 +291,6 @@ class CreatePostModal extends PureComponent
                         <MaterialInput className="sign-up-page-field"
                                        backgroundColor="var(--header-background-color)"
                                        name="keywords"
-                                       maxLength={80}
                                        label="کلمات کلیدی"
                                        getValue={this.setValue}
                                        onKeyDown={this.submitOnEnter}

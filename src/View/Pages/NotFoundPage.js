@@ -4,9 +4,9 @@ import {Helmet} from "react-helmet"
 const NotFound = () =>
     <div>
         <Helmet>
-            <title>تک توپ | 404</title>
-            <meta property="og:title" content="تک توپ | 404"/>
-            <meta name="twitter:title" content="تک توپ | 404"/>
+            <title>مجله آنالیز فوتبال | 404</title>
+            <meta property="og:title" content="مجله آنالیز فوتبال | 404"/>
+            <meta name="twitter:title" content="مجله آنالیز فوتبال | 404"/>
         </Helmet>
         not found!
     </div>

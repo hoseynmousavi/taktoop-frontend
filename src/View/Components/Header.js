@@ -168,7 +168,7 @@ class Header extends PureComponent
                         <Hamburger className="header-hamburger-mobile" collapse={collapseSidebar} onClick={collapseSidebar ? this.showSidebar : this.hideSidebar}/>
                     </Material>
 
-                    <Link className="show-mobile" to="/"><h1 className="header-name">تک توپ</h1></Link>
+                    <Link className="show-mobile" to="/"><h1 className="header-name">مجله آنالیز فوتبال</h1></Link>
 
                     <div className="header-sidebar-back" style={{opacity: "0", height: "0"}} ref={e => this.sidebarBack = e} onClick={this.hideSidebar}/>
                     <div className="header-sidebar-container" style={{transform: "translateX(100%)"}} ref={e => this.sidebar = e}>
@@ -196,7 +196,7 @@ class Header extends PureComponent
                     </div>
 
                     <div className="header-section show-desktop">
-                        <Link to="/"><h1 className="header-name">تک توپ</h1></Link>
+                        <Link to="/"><h1 className="header-name">مجله آنالیز فوتبال</h1></Link>
                         {
                             !user ?
                                 <React.Fragment>
@@ -214,7 +214,7 @@ class Header extends PureComponent
                             (user?.role === "admin" || user?.role === "system") &&
                             <NavLink activeClassName="header-right-section-link-active" className="show-desktop" to="/panel"><Material className="header-right-section-link">پنل اعضا</Material></NavLink>
                         }
-                        <Link to="/"><img src={Logo} alt="تک توپ" className="header-logo"/></Link>
+                        <Link to="/"><img src={Logo} alt="مجله آنالیز فوتبال" className="header-logo"/></Link>
                     </div>
                 </div>
 

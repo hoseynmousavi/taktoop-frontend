@@ -120,9 +120,9 @@ class ProfilePage extends PureComponent
             <div className="profile-page-cont">
 
                 <Helmet>
-                    <title>تک توپ | پروفایل</title>
-                    <meta property="og:title" content="تک توپ | پروفایل"/>
-                    <meta name="twitter:title" content="تک توپ | پروفایل"/>
+                    <title>مجله آنالیز فوتبال | پروفایل</title>
+                    <meta property="og:title" content="مجله آنالیز فوتبال | پروفایل"/>
+                    <meta name="twitter:title" content="مجله آنالیز فوتبال | پروفایل"/>
                 </Helmet>
 
                 <div className="panel-table-title regular">پروفایل</div>

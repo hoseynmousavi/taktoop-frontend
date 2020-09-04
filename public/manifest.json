@@ -1,6 +1,6 @@
 {
-  "short_name": "تک توپ",
-  "name": "تک توپ",
+  "short_name": "مجله آنالیز فوتبال",
+  "name": "مجله آنالیز فوتبال",
   "icons": [
     {
       "src": "favicon.ico",
@@ -25,6 +25,6 @@
   "orientation": "portrait-primary",
   "dir": "rtl",
   "lang": "fa",
-  "description": "وب اپلیکیشن تک توپ",
+  "description": "وب اپلیکیشن مجله آنالیز فوتبال",
   "prefer_related_applications": false
 }

@@ -81,9 +81,9 @@ class CategoryPage extends PureComponent
                         <React.Fragment>
 
                             <Helmet>
-                                <title>تک توپ | {category.title}</title>
-                                <meta property="og:title" content={`تک توپ | ${category.title}`}/>
-                                <meta name="twitter:title" content={`تک توپ | ${category.title}`}/>
+                                <title>مجله آنالیز فوتبال | {category.title}</title>
+                                <meta property="og:title" content={`مجله آنالیز فوتبال | ${category.title}`}/>
+                                <meta name="twitter:title" content={`مجله آنالیز فوتبال | ${category.title}`}/>
                             </Helmet>
 
                             <a href={parent.address} className="home-page-slider-cont">

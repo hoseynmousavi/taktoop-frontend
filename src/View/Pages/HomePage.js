@@ -63,9 +63,9 @@ class HomePage extends PureComponent
             <div className="home-page-cont">
 
                 <Helmet>
-                    <title>تک توپ</title>
-                    <meta property="og:title" content="تک توپ"/>
-                    <meta name="twitter:title" content="تک توپ"/>
+                    <title>مجله آنالیز فوتبال</title>
+                    <meta property="og:title" content="مجله آنالیز فوتبال"/>
+                    <meta name="twitter:title" content="مجله آنالیز فوتبال"/>
                 </Helmet>
 
                 {

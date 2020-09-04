@@ -117,9 +117,9 @@ class SignupPage extends PureComponent
             <div className="sign-up-page-cont">
 
                 <Helmet>
-                    <title>تک توپ | ثبت نام</title>
-                    <meta property="og:title" content="تک توپ | ثبت نام"/>
-                    <meta name="twitter:title" content="تک توپ | ثبت نام"/>
+                    <title>مجله آنالیز فوتبال | ثبت نام</title>
+                    <meta property="og:title" content="مجله آنالیز فوتبال | ثبت نام"/>
+                    <meta name="twitter:title" content="مجله آنالیز فوتبال | ثبت نام"/>
                 </Helmet>
 
                 {redirect && <Redirect to="/"/>}
