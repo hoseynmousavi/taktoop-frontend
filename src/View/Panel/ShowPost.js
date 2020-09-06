@@ -6,6 +6,8 @@ import PostDescription from "./PostDescription"
 import {NotificationManager} from "react-notifications"
 import AddDescription from "./AddDescription"
 import compressImage from "../../Helpers/compressImage"
+import EyeSvg from "../../Media/Svgs/EyeSvg"
+import DateSvg from "../../Media/Svgs/DateSvg"
 
 class ShowPost extends PureComponent
 {
@@ -154,8 +156,22 @@ class ShowPost extends PureComponent
                     </div>
                 }
                 <div>
-                    <div className="panel-table-title">
-                        پست {post.title}
+                    <div className="panel-table-title with-detail">
+                        <div className="panel-table-title-text">{post.title}</div>
+                        <div className="panel-table-title-detail">
+                            <div className="display-inline">
+                                <div className="post-item-cont-text-detail-like-count black">{post.views_count || "1"}</div>
+                                <EyeSvg className="post-item-cont-text-detail-like eye-black"/>
+                            </div>
+                            <div className="display-inline">
+                                <div className="post-item-cont-text-detail-like-count date black">
+                                    {new Date(post.created_date).toLocaleTimeString("fa-ir").slice(0, 5)}
+                                    <span> - </span>
+                                    {new Date(post.created_date).toLocaleDateString("fa-ir")}
+                                </div>
+                                <DateSvg className="post-item-cont-text-detail-like black"/>
+                            </div>
+                        </div>
                     </div>
                     <div className="panel-post-description-cont">
                         {

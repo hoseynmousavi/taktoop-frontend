@@ -100,15 +100,15 @@
 
 .post-item-cont-text {
   font-size: $regular-font-size;
-  padding: 0 15px;
+  padding-right: 15px;
   vertical-align: top;
   display: inline-block;
-  width: calc(100% - 288px);
+  width: calc(100% - 273px);
 
   @media screen and (max-width: 480px) {
     display: block;
     width: 250px;
-    padding: 0;
+    padding-right: 0;
     margin: 15px auto 0 auto;
   }
 }
@@ -127,15 +127,38 @@
 }
 
 .post-item-cont-text-detail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   @media screen and (max-width: 480px) {
     margin-top: 10px;
   }
+}
+
+.post-item-cont-text-detail-date {
+  color: var(--secondary-color);
 }
 
 .post-item-cont-text-detail-like {
   vertical-align: top;
   width: 18px;
   fill: var(--secondary-color);
+
+  &.eye {
+    margin-right: 15px;
+    margin-top: 2px;
+  }
+
+  &.black {
+    fill: var(--background-color);
+  }
+
+  &.eye-black {
+    margin-left: 15px;
+    margin-right: 5px;
+    margin-top: 2px;
+    fill: var(--background-color);
+  }
 }
 
 .post-item-cont-text-detail-like-count {
@@ -145,4 +168,13 @@
   font-size: $regular-font-size;
   margin-top: 2px;
   margin-right: 5px;
+
+  &.black {
+    color: var(--background-color);
+  }
+
+  &.date {
+    margin-right: 0;
+    margin-left: 5px;
+  }
 }

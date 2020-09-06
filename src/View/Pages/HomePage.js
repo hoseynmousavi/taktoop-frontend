@@ -6,11 +6,11 @@ import Material from "../Components/Material"
 import LikeSvg from "../../Media/Svgs/LikeSvg"
 import {Helmet} from "react-helmet"
 import {ClipLoader} from "react-spinners"
+import EyeSvg from "../../Media/Svgs/EyeSvg"
+import DateSvg from "../../Media/Svgs/DateSvg"
 
-class HomePage extends PureComponent
-{
-    constructor(props)
-    {
+class HomePage extends PureComponent {
+    constructor(props) {
         super(props)
         this.state = {
             mostViewPosts: [],
@@ -25,8 +25,7 @@ class HomePage extends PureComponent
         }
     }
 
-    componentDidMount()
-    {
+    componentDidMount() {
         window.scroll({top: 0})
 
         api.get("post", `?limit=5&page=1`)
@@ -42,17 +41,14 @@ class HomePage extends PureComponent
             .then(predictPosts => this.setState({...this.state, predictPostsLoading: false, predictPosts}))
     }
 
-    selectCategory(id)
-    {
-        this.setState({...this.state, posts: [], postsLoading: true}, () =>
-        {
+    selectCategory(id) {
+        this.setState({...this.state, posts: [], postsLoading: true}, () => {
             if (id) api.get("category-post", `?limit=5&page=1&category_id=${id}`).then(posts => this.setState({...this.state, selectedTab: id, postsLoading: false, posts}))
             else api.get("post", `?limit=5&page=1`).then(posts => this.setState({...this.state, selectedTab: "news", postsLoading: false, posts}))
         })
     }
 
-    render()
-    {
+    render() {
         const {
             boldPosts, predictPosts, posts, mostViewPosts, selectedTab,
             mostViewPostsLoading, postsLoading, predictPostsLoading, boldPostsLoading,
@@ -129,8 +125,20 @@ class HomePage extends PureComponent
                                                 <div className="post-item-cont-text">
                                                     <div className="post-item-cont-text-desc">{post.short_description}</div>
                                                     <div className="post-item-cont-text-detail">
-                                                        <LikeSvg className="post-item-cont-text-detail-like"/>
-                                                        <div className="post-item-cont-text-detail-like-count">{post.likes_count || "0"}</div>
+                                                        <div>
+                                                            <LikeSvg className="post-item-cont-text-detail-like"/>
+                                                            <div className="post-item-cont-text-detail-like-count">{post.likes_count || "0"}</div>
+                                                            <EyeSvg className="post-item-cont-text-detail-like eye"/>
+                                                            <div className="post-item-cont-text-detail-like-count">{post.views_count || "1"}</div>
+                                                        </div>
+                                                        <div className="post-item-cont-text-detail-date">
+                                                            <div className="post-item-cont-text-detail-like-count date">
+                                                                {new Date(post.created_date).toLocaleTimeString("fa-ir").slice(0, 5)}
+                                                                <span> - </span>
+                                                                {new Date(post.created_date).toLocaleDateString("fa-ir")}
+                                                            </div>
+                                                            <DateSvg className="post-item-cont-text-detail-like"/>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </Material>

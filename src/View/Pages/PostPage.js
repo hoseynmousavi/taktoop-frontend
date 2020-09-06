@@ -5,42 +5,37 @@ import PostDescription from "../Panel/PostDescription"
 import {Helmet} from "react-helmet"
 import Material from "../Components/Material"
 import LikeSvg from "../../Media/Svgs/LikeSvg"
+import EyeSvg from "../../Media/Svgs/EyeSvg"
+import DateSvg from "../../Media/Svgs/DateSvg"
 
-class PostPage extends PureComponent
-{
-    constructor(props)
-    {
+class PostPage extends PureComponent {
+    constructor(props) {
         super(props)
         this.state = {
             isLoading: true,
         }
     }
 
-    componentDidMount()
-    {
+    componentDidMount() {
         const {title} = this.props
         api.get("post", `?title=${title}`)
             .then(post => this.setState({...this.state, post, isLoading: false}))
             .catch(() => this.setState({...this.state, isLoading: false, err: true}))
     }
 
-    toggleLike = () =>
-    {
+    toggleLike = () => {
         const {post} = this.state
-        if (!post.is_liked)
-        {
+        if (!post.is_liked) {
             api.post("post-like", {post_id: post._id})
                 .then(() => this.setState({...this.state, post: {...this.state.post, is_liked: true, likes_count: this.state.post.likes_count + 1}}))
         }
-        else
-        {
+        else {
             api.del("post-like", {post_id: post._id})
                 .then(() => this.setState({...this.state, post: {...this.state.post, is_liked: false, likes_count: this.state.post.likes_count - 1}}))
         }
     }
 
-    render()
-    {
+    render() {
         const {user} = this.props
         const {err, isLoading, post} = this.state
         if (err) return <div className="panel-table-err-loading">مشکلی پیش آمد! کانکشن خود را بررسی کنید!</div>
@@ -55,7 +50,24 @@ class PostPage extends PureComponent
                     {post.keywords && <meta name="keywords" content={`${post.keywords}`}/>}
                 </Helmet>
 
-                <div className="panel-table-title regular">{post.title}</div>
+                <div className="panel-table-title regular with-detail">
+                    <div className="panel-table-title-text">{post.title}</div>
+                    <div className="panel-table-title-detail">
+                        <div className="display-inline">
+                            <div className="post-item-cont-text-detail-like-count black">{post.views_count || "1"}</div>
+                            <EyeSvg className="post-item-cont-text-detail-like eye-black"/>
+                        </div>
+                        <div className="display-inline">
+                            <div className="post-item-cont-text-detail-like-count date black">
+                                {new Date(post.created_date).toLocaleTimeString("fa-ir").slice(0, 5)}
+                                <span> - </span>
+                                {new Date(post.created_date).toLocaleDateString("fa-ir")}
+                            </div>
+                            <DateSvg className="post-item-cont-text-detail-like black"/>
+                        </div>
+                    </div>
+                </div>
+
                 {
                     Object.values(post.post_descriptions).length > 0 ?
                         <div className="post-page-content">

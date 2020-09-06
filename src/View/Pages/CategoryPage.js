@@ -5,11 +5,11 @@ import Material from "../Components/Material"
 import {Link} from "react-router-dom"
 import LikeSvg from "../../Media/Svgs/LikeSvg"
 import {Helmet} from "react-helmet"
+import EyeSvg from "../../Media/Svgs/EyeSvg"
+import DateSvg from "../../Media/Svgs/DateSvg"
 
-class CategoryPage extends PureComponent
-{
-    constructor(props)
-    {
+class CategoryPage extends PureComponent {
+    constructor(props) {
         super(props)
         this.state = {
             posts: [],
@@ -20,8 +20,7 @@ class CategoryPage extends PureComponent
         this.page = 2
     }
 
-    componentDidMount()
-    {
+    componentDidMount() {
         window.scroll({top: 0})
 
         if (this.props.category) this.getPosts()
@@ -30,31 +29,24 @@ class CategoryPage extends PureComponent
         document.addEventListener("scroll", this.onScroll)
     }
 
-    componentWillUnmount()
-    {
+    componentWillUnmount() {
         document.removeEventListener("scroll", this.onScroll)
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot)
-    {
+    componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.getData && this.props.category) this.getPosts()
     }
 
-    onScroll = () =>
-    {
+    onScroll = () => {
         clearTimeout(this.timeout)
-        this.timeout = setTimeout(() =>
-        {
+        this.timeout = setTimeout(() => {
             const {posts} = this.state
             const scrollHeight = document.body ? document.body.scrollHeight : 0
-            if (posts.length > 0 && window.innerHeight + window.scrollY >= scrollHeight - 200 && scrollHeight > this.activeScrollHeight)
-            {
-                this.setState({...this.state, isLoading: true}, () =>
-                {
+            if (posts.length > 0 && window.innerHeight + window.scrollY >= scrollHeight - 200 && scrollHeight > this.activeScrollHeight) {
+                this.setState({...this.state, isLoading: true}, () => {
                     const {category} = this.props
                     this.activeScrollHeight = scrollHeight
-                    api.get("post", `?category_id=${category._id}&limit=10&page=${this.page}`).then((data) =>
-                    {
+                    api.get("post", `?category_id=${category._id}&limit=10&page=${this.page}`).then((data) => {
                         this.page += 1
                         this.setState({...this.state, isLoading: false, posts: [...posts, ...data]})
                     })
@@ -63,15 +55,13 @@ class CategoryPage extends PureComponent
         }, 20)
     }
 
-    getPosts()
-    {
+    getPosts() {
         const {category} = this.props
         api.get("post", `?category_id=${category._id}&limit=10&page=1`)
             .then(posts => this.setState({...this.state, posts, isLoading: false}))
     }
 
-    render()
-    {
+    render() {
         const {category, parent} = this.props
         const {posts, isLoading} = this.state
         return (
@@ -106,8 +96,20 @@ class CategoryPage extends PureComponent
                                                     <div className="post-item-cont-text">
                                                         <div className="post-item-cont-text-desc">{post.short_description}</div>
                                                         <div className="post-item-cont-text-detail">
-                                                            <LikeSvg className="post-item-cont-text-detail-like"/>
-                                                            <div className="post-item-cont-text-detail-like-count">{post.likes_count || "0"}</div>
+                                                            <div>
+                                                                <LikeSvg className="post-item-cont-text-detail-like"/>
+                                                                <div className="post-item-cont-text-detail-like-count">{post.likes_count || "0"}</div>
+                                                                <EyeSvg className="post-item-cont-text-detail-like eye"/>
+                                                                <div className="post-item-cont-text-detail-like-count">{post.views_count || "1"}</div>
+                                                            </div>
+                                                            <div className="post-item-cont-text-detail-date">
+                                                                <div className="post-item-cont-text-detail-like-count date">
+                                                                    {new Date(post.created_date).toLocaleTimeString("fa-ir").slice(0, 5)}
+                                                                    <span> - </span>
+                                                                    {new Date(post.created_date).toLocaleDateString("fa-ir")}
+                                                                </div>
+                                                                <DateSvg className="post-item-cont-text-detail-like"/>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </Material>

@@ -72,6 +72,9 @@ class PostDescription extends PureComponent
                         <SmoothArrowSvg className="panel-post-description-order-up" onClick={this.setOrderUp}/>
                         <SmoothArrowSvg className="panel-post-description-order-down" onClick={this.setOrderDown}/>
                         {order && order !== item.order && <TickSvg className="panel-post-description-sub" onClick={this.updateOrder}/>}
+
+                        <div className="panel-post-description-date">{new Date(item.created_date).toLocaleString("fa-ir")}</div>
+
                     </React.Fragment>
                 }
                 {
