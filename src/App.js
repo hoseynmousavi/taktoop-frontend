@@ -12,6 +12,7 @@ const HomePage = lazy(() => import("./View/Pages/HomePage"))
 const PostPage = lazy(() => import("./View/Pages/PostPage"))
 const SignupPage = lazy(() => import("./View/Pages/SignupPage"))
 const ProfilePage = lazy(() => import("./View/Pages/ProfilePage"))
+const AboutUsPage = lazy(() => import("./View/Pages/AboutUsPage"))
 const NotFoundPage = lazy(() => import("./View/Pages/NotFoundPage"))
 
 class App extends PureComponent
@@ -48,7 +49,6 @@ class App extends PureComponent
                     {
                         let img = new Image()
                         img.src = REST_URL + item.menu_picture
-                        img.onload = () => console.log("loaded img")
                     })
                 })
             })
@@ -83,6 +83,7 @@ class App extends PureComponent
                 <main className="main">
                     <Suspense fallback={null}>
                         <Switch>
+                            <Route path="/about-us" render={() => <AboutUsPage/>}/>
                             <Route path="/sign-up" render={() => <SignupPage setUser={this.setUser}/>}/>
                             <Route path="/category/:id" render={route => <CategoryPage key={route.match.params.id} category={categories[route.match.params.id]} parent={categories[categories[route.match.params.id]?.parent_id]}/>}/>
                             <Route path="/post/:title" render={route => <PostPage user={user} title={route.match.params.title}/>}/>

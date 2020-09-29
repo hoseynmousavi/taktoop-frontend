@@ -162,6 +162,10 @@ class SignupPage extends PureComponent
 
                     <div className={`sign-up-page-field-err ${serverError ? "show" : ""}`}>خطا در برقراری ارتباط!</div>
 
+                    <div className="sign-up-page-notice">
+                        با ثبت نام در مجله آنالیز فوتبال، از آخرین و مهم ترین اخبار فوتبالی دنیا با خبر باشید.
+                    </div>
+
                     <Material className="sign-up-page-submit" onClick={this.submit}>ثبت</Material>
                 </div>
             </div>

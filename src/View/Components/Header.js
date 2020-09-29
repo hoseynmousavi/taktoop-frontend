@@ -238,7 +238,7 @@ class Header extends PureComponent
                         </div>
                         {
                             showCat?.menu_picture &&
-                            <img className="header-categories-dialog-img" src={REST_URL + showCat.menu_picture} alt={showCat?.title}/>
+                            <img className="header-categories-dialog-img" src={REST_URL + showCat.menu_picture} alt={showCat?.title ?? ""}/>
                         }
                     </div>
                 </div>

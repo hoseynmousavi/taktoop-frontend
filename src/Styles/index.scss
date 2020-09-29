@@ -4,6 +4,7 @@
 @import "animations";
 @import "signup";
 @import "category-page";
+@import "about";
 @import "profile";
 @import "panel";
 @import "image-show";
@@ -125,7 +126,7 @@ input[type=number]::-webkit-outer-spin-button {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--transparent-second);
+    background-color: var(--transparent-primary);
     text-align: center;
     font-size: $regular-font-size;
     font-weight: bold;
