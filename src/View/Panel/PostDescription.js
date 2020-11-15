@@ -48,50 +48,59 @@ class PostDescription extends PureComponent
     render()
     {
         const {order} = this.state
-        const {item, toggleUpdateDescription, toggleUpdateBoldDescription, toggleUpdateImgVideo, deleteDesc, regularView} = this.props
+        const {item, index, link, toggleUpdateDescription, toggleUpdateBoldDescription, toggleUpdateImgVideo, deleteDesc, regularView} = this.props
         return (
-            <div className={`panel-post-description ${!regularView ? "" : "regular"}`}>
-                {
-                    !regularView &&
-                    <React.Fragment>
-                        <Material className="panel-post-description-delete" onClick={() => deleteDesc(item)}><GarbageSvg/></Material>
-                        <label>
-                            <Material className="panel-post-description-edit" onClick={() => item.type === "description" ? toggleUpdateDescription(item) : item.type === "bold" ? toggleUpdateBoldDescription(item) : null}>
-                                {
-                                    item.type === "picture" || item.type === "video" ?
-                                        <React.Fragment>
+            <>
+                <div className={`panel-post-description ${!regularView ? "" : "regular"}`}>
+                    {
+                        !regularView &&
+                        <React.Fragment>
+                            <Material className="panel-post-description-delete" onClick={() => deleteDesc(item)}><GarbageSvg/></Material>
+                            <label>
+                                <Material className="panel-post-description-edit"
+                                          onClick={() => item.type === "description" ? toggleUpdateDescription(item) : item.type === "bold" ? toggleUpdateBoldDescription(item) : null}>
+                                    {
+                                        item.type === "picture" || item.type === "video" ?
+                                            <React.Fragment>
+                                                <PencilSvg/>
+                                                <input hidden type="file" accept={item.type === "picture" ? "image/*" : "video/*"} onChange={e => toggleUpdateImgVideo(e, item)}/>
+                                            </React.Fragment>
+                                            :
                                             <PencilSvg/>
-                                            <input hidden type="file" accept={item.type === "picture" ? "image/*" : "video/*"} onChange={e => toggleUpdateImgVideo(e, item)}/>
-                                        </React.Fragment>
-                                        :
-                                        <PencilSvg/>
-                                }
-                            </Material>
-                        </label>
-                        <Material className="panel-post-description-order">{order ? order : item.order}</Material>
-                        <SmoothArrowSvg className="panel-post-description-order-up" onClick={this.setOrderUp}/>
-                        <SmoothArrowSvg className="panel-post-description-order-down" onClick={this.setOrderDown}/>
-                        {order && order !== item.order && <TickSvg className="panel-post-description-sub" onClick={this.updateOrder}/>}
+                                    }
+                                </Material>
+                            </label>
+                            <Material className="panel-post-description-order">{order ? order : item.order}</Material>
+                            <SmoothArrowSvg className="panel-post-description-order-up" onClick={this.setOrderUp}/>
+                            <SmoothArrowSvg className="panel-post-description-order-down" onClick={this.setOrderDown}/>
+                            {order && order !== item.order && <TickSvg className="panel-post-description-sub" onClick={this.updateOrder}/>}
 
-                        <div className="panel-post-description-date">{new Date(item.created_date).toLocaleString("fa-ir")}</div>
+                            <div className="panel-post-description-date">{new Date(item.created_date).toLocaleString("fa-ir")}</div>
 
-                    </React.Fragment>
-                }
-                {
-                    item.type === "description" ?
-                        <div className="panel-post-description-desc" ref={e => this.desc = e}>{item.content}</div>
-                        :
-                        item.type === "bold" ?
-                            <div className="panel-post-description-desc bold" ref={e => this.desc = e}>{item.content}</div>
+                        </React.Fragment>
+                    }
+                    {
+                        item.type === "description" ?
+                            <div className="panel-post-description-desc" ref={e => this.desc = e}>{item.content}</div>
                             :
-                            item.type === "picture" ?
-                                <ImageShow className="panel-post-description-img-video" key={item.content} src={REST_URL + item.content} alt=""/>
+                            item.type === "bold" ?
+                                <div className="panel-post-description-desc bold" ref={e => this.desc = e}>{item.content}</div>
                                 :
-                                <video key={item.content} className="panel-post-description-img-video">
-                                    <source src={REST_URL + item.content}/>
-                                </video>
+                                item.type === "picture" ?
+                                    <ImageShow className="panel-post-description-img-video" key={item.content} src={REST_URL + item.content} alt=""/>
+                                    :
+                                    <video key={item.content} className="panel-post-description-img-video">
+                                        <source src={REST_URL + item.content}/>
+                                    </video>
+                    }
+                </div>
+                {
+                    index % 7 === 0 &&
+                    <div className="panel-post-description-desc bold btn">
+                        <a title={"ورود به " + link.text} href={link.link.includes("http") ? link.link : "http://" + link.link}>ورود به {link.text}</a>
+                    </div>
                 }
-            </div>
+            </>
         )
     }
 }

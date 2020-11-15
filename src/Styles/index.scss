@@ -117,7 +117,7 @@ input[type=number]::-webkit-outer-spin-button {
 .show-link {
   display: none;
 
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: 1024px) {
     position: fixed;
     bottom: 0;
     right: 0;
@@ -132,7 +132,7 @@ input[type=number]::-webkit-outer-spin-button {
     font-weight: bold;
   }
 
-  @media screen and (min-width: 1000px) {
+  @media screen and (min-width: 1025px) {
     display: block;
     position: fixed;
     top: 20px;

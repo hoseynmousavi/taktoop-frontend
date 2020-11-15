@@ -8,36 +8,51 @@ import LikeSvg from "../../Media/Svgs/LikeSvg"
 import EyeSvg from "../../Media/Svgs/EyeSvg"
 import DateSvg from "../../Media/Svgs/DateSvg"
 
-class PostPage extends PureComponent {
-    constructor(props) {
+class PostPage extends PureComponent
+{
+    constructor(props)
+    {
         super(props)
-        this.state = {
-            isLoading: true,
-        }
+        this.state =
+            {
+                isLoading: true,
+                post: null,
+                link: null,
+                is_liked: null,
+                likes_count: null,
+                err: false,
+            }
     }
 
-    componentDidMount() {
+    componentDidMount()
+    {
         const {title} = this.props
         api.get("post", `?title=${title}`)
             .then(post => this.setState({...this.state, post, isLoading: false}))
             .catch(() => this.setState({...this.state, isLoading: false, err: true}))
+        api.get("link")
+            .then(link => this.setState({...this.state, link}))
     }
 
-    toggleLike = () => {
+    toggleLike = () =>
+    {
         const {post} = this.state
-        if (!post.is_liked) {
+        if (!post.is_liked)
+        {
             api.post("post-like", {post_id: post._id})
                 .then(() => this.setState({...this.state, post: {...this.state.post, is_liked: true, likes_count: this.state.post.likes_count + 1}}))
         }
-        else {
+        else
+        {
             api.del("post-like", {post_id: post._id})
                 .then(() => this.setState({...this.state, post: {...this.state.post, is_liked: false, likes_count: this.state.post.likes_count - 1}}))
         }
     }
 
-    render() {
+    render()
+    {
         const {user} = this.props
-        const {err, isLoading, post} = this.state
+        const {err, isLoading, post, link} = this.state
         if (err) return <div className="panel-table-err-loading">مشکلی پیش آمد! کانکشن خود را بررسی کنید!</div>
         else if (isLoading) return <div className="panel-table-err-loading"><ClipLoader size={19} color="var(--primary-color)"/></div>
         return (
@@ -72,16 +87,17 @@ class PostPage extends PureComponent {
                     Object.values(post.post_descriptions).length > 0 ?
                         <div className="post-page-content">
                             {
-                                Object.values(post.post_descriptions).sort((a, b) => a.order - b.order).map(item =>
+                                Object.values(post.post_descriptions).sort((a, b) => a.order - b.order).map((item, index) =>
                                     <PostDescription key={item._id}
                                                      regularView={true}
                                                      toggleUpdateBoldDescription={this.toggleUpdateBoldDescription}
                                                      toggleUpdateDescription={this.toggleUpdateDescription}
                                                      length={Object.values(post.post_descriptions).length}
-                                                     item={item}
+                                                     item={item} index={index}
                                                      updatePostDescription={this.updatePostDescription}
                                                      deleteDesc={this.deleteDesc}
                                                      toggleUpdateImgVideo={this.toggleUpdateImgVideo}
+                                                     link={link}
                                     />,
                                 )
                             }

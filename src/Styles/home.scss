@@ -17,6 +17,14 @@
   height: calc(100vh - 200px);
   object-fit: cover;
   display: block;
+
+  @media screen and (max-width: 1024px) {
+    height: 40vh;
+  }
+
+  @media screen and (max-width: 480px) {
+    height: 30vh;
+  }
 }
 
 .home-page-slider-text {

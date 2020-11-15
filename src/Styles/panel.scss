@@ -614,6 +614,25 @@
     font-size: $title-font-size;
     color: var(--secondary-color);
   }
+
+  &.btn {
+    font-weight: bold;
+    font-size: $title-font-size;
+    color: var(--secondary-color);
+    padding: 9px 0;
+    transition-duration: .3s;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, .2);
+    background-color: var(--login-page-background-color);
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid var(--secondary-color);
+    border-bottom: 1px solid var(--secondary-color);
+
+    &:hover {
+      color: var(--dark-color);
+      background-color: var(--primary-color);
+    }
+  }
 }
 
 .panel-post-description-img-video {
