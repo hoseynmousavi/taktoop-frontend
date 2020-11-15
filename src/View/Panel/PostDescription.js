@@ -95,7 +95,7 @@ class PostDescription extends PureComponent
                     }
                 </div>
                 {
-                    index % 7 === 0 &&
+                    link && index % 7 === 0 &&
                     <div className="panel-post-description-desc bold btn">
                         <a title={"ورود به " + link.text} href={link.link.includes("http") ? link.link : "http://" + link.link}>ورود به {link.text}</a>
                     </div>
