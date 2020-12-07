@@ -7,7 +7,8 @@
   left: 0;
   z-index: 3;
   height: 120px;
-  background-color: var(--header-background-color);
+  background: rgba(30, 30, 30, .85);
+  backdrop-filter: blur(20px);
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
 
   @media screen and (max-width: 480px) {
